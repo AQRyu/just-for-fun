@@ -1,0 +1,11 @@
+Work Item Type,Title 1,Title 2,Title 3,Description,Iteration Path,Area Path,Tags,Acceptance Criteria,Priority
+Epic,Implement Role-Playing LLM,,,Implement the ability for the LLM to adopt different roles in the chat.,Sprint 5,Chat Application,LLM;Role Playing,,1
+User Story,,Define LLM Roles,,"As a developer, I want to define different roles for the LLM, each with its own persona and behavior.",Sprint 5,Chat Application,LLM;Role Playing;Configuration,"LLM roles are defined with appropriate personas and behaviors.",2
+Task,,,Create data structures for LLM roles,"Create data structures to store role definitions (e.g., name, description, behavior guidelines).",Sprint 5,Chat Application,LLM;Role Playing;Backend,"Data structures for LLM roles created.",3
+Task,,,Implement UI for defining LLM roles,"Implement UI to allow users to define and manage LLM roles.",Sprint 5,Chat Application,LLM;Role Playing;UI;Vue.js,"UI for defining LLM roles implemented and functional.",3
+User Story,,Select LLM Role in Chat,,"As a user, I want to select a specific role for the LLM to adopt during our chat.",Sprint 5,Chat Application,LLM;Role Playing;UI,"Users can select an LLM role in the chat interface.",2
+Task,,,Implement role selection UI in chat,"Add UI elements to allow users to select an LLM role.",Sprint 5,Chat Application,LLM;Role Playing;UI;Vue.js,"Role selection UI implemented in the chat interface.",3
+Task,,,Update API to handle role selection,"Modify API to accept and process the selected LLM role.",Sprint 5,Chat Application,LLM;Role Playing;API;Backend,"API updated to handle role selection.",3
+User Story,,LLM Responds According to Role,,"As a user, I want the LLM to respond according to the selected role, maintaining a consistent persona and behavior.",Sprint 5,Chat Application,LLM;Role Playing;LLM Integration,"LLM responses align with the chosen role.",2
+Task,,,Modify LLM integration to incorporate role context,"Update the LLM integration to use the selected role context when generating responses.",Sprint 5,Chat Application,LLM;Role Playing;LLM Integration;Backend,"LLM integration modified to use role context.",3
+Task,,,Test LLM responses for different roles,"Test the LLM's responses to ensure they align with the selected role.",Sprint 5,Chat Application,LLM;Role Playing;Testing,"LLM responses tested for various roles.",3

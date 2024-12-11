@@ -1,0 +1,31 @@
+Work Item Type,Title 1,Title 2,Title 3,Description,Iteration Path,Area Path,Tags,Acceptance Criteria,Priority
+Epic,Set up Development Environment,,,Set up the necessary development environment for the project.,Sprint 1,Chat Application,,,1
+User Story,,Prepare Development Environment,,"As a developer, I need the basic project structure and dependencies set up so I can begin development.",Sprint 1,Chat Application,Development,"Project builds successfully with all necessary dependencies.",2
+Task,,,Initialize Spring Boot project,"Create a new Spring Boot project.",Sprint 1,Chat Application,Java,"Project created successfully and builds without errors.",3
+Task,,,Configure necessary dependencies,"Add required dependencies (Spring Web, Spring Security, LiteLLM, etc.).",Sprint 1,Chat Application,Java,"All dependencies added and resolved. Project builds successfully.",3
+User Story,,Configure Local Environment,,"As a developer, I need a working local development environment so I can run and test the application.",Sprint 1,Chat Application,Development,"Application runs successfully on the local machine.",2
+Task,,,Set up local development environment,"Configure the local development environment.",Sprint 1,Chat Application,DevOps,"Local environment configured. Application runs locally without errors.",3
+User Story,,Connect to LLM,,"As a developer, I need to connect to the LLM provider so the application can communicate with the language model.",Sprint 1,Chat Application,LLM,"Successful connection to Gemini/Ollama verified.",2
+Task,,,Configure connection to Gemini/Ollama,"Establish the connection to the Gemini/Ollama LLM provider.",Sprint 1,Chat Application,LLM,"Successful connection to Gemini/Ollama verified.",3
+Epic,Implement Basic Chat,,,Implement the core chat functionality.,Sprint 1,Chat Application,,,1
+User Story,,Send and Receive Messages,,"As a user, I want to send a message and receive a response so that I can have a basic chat interaction.",Sprint 1,Chat Application,Chat,"Messages are successfully sent, processed, and a response is received.",2
+Task,,,Create API endpoint to receive messages,"Create the API endpoint for receiving messages.",Sprint 1,Chat Application,Java,"API endpoint created and accessible.",3
+Task,,,Implement basic message processing,"Implement the logic for storing and retrieving messages.",Sprint 1,Chat Application,Java,"Messages are successfully stored and retrieved.",3
+Task,,,Integrate LiteLLM to generate a response,"Integrate LiteLLM to generate responses to messages.",Sprint 1,Chat Application,LLM,"LiteLLM integration complete. LLM generates a response when a message is received.",3
+Task,,,Create API endpoint to send responses,"Create the API endpoint for sending responses.",Sprint 1,Chat Application,Java,"API endpoint created and returns a valid response.",3
+Epic,Implement Authentication,,,Implement user authentication and authorization.,Sprint 1,Chat Application,,,1
+User Story,,Create a New Account,,"As a new user, I want to create an account so that I can access the chat application.",Sprint 1,Chat Application,Authentication,"Account successfully created and user can log in.",2
+Task,,,Implement user registration,"Implement the user registration process.",Sprint 1,Chat Application,Java,"User registration functionality implemented and tested.",3
+Task,,,Implement password encryption,"Implement password encryption for security.",Sprint 1,Chat Application,Security,"Passwords are encrypted before storage.",3
+Task,,,Create database schema for users,"Create the database schema for storing user information.",Sprint 1,Chat Application,Database,"Database schema created successfully.",3
+User Story,,Log in to Existing Account,,"As a registered user, I want to log in so that I can start chatting.",Sprint 1,Chat Application,Authentication,"User can successfully log in with valid credentials. Session is established.",2
+Task,,,Implement login functionality,"Implement the login functionality.",Sprint 1,Chat Application,Java,"Login functionality implemented and tested.",3
+Task,,,Implement session management,"Implement session management for logged-in users.",Sprint 1,Chat Application,Java,"Session management implemented. Active sessions are tracked.",3
+User Story,,Log out of Account,,"As a logged-in user, I want to log out so that I can secure my account.",Sprint 1,Chat Application,Authentication,"User can successfully log out. Session is terminated.",2
+Task,,,Implement logout functionality,"Implement the logout functionality.",Sprint 1,Chat Application,Java,"Logout functionality implemented and tested.",3
+Epic,Testing,,,Set up and run tests for implemented features.,Sprint 1,Chat Application,,,1
+User Story,,Test Message Handling,,"As a developer, I want to test message handling to ensure messages are sent and received correctly.",Sprint 1,Chat Application,Testing,"Unit tests created and passing for message handling.",2
+Task,,,Write unit tests for message handling,"Write unit tests to verify message handling logic.",Sprint 1,Chat Application,Testing,"Unit tests created and passing for message handling.",3
+User Story,,Test Authentication,,"As a developer, I want to test authentication to ensure users can create accounts, log in, and log out securely.",Sprint 1,Chat Application,Testing,"Integration tests created and passing for authentication.",2
+Task,,,Write integration tests for authentication,"Write integration tests to verify authentication functionality.",Sprint 1,Chat Application,Testing,"Integration tests created and passing for authentication.",3
+
