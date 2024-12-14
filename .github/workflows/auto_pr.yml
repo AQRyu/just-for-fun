@@ -26,8 +26,9 @@ jobs:
           title: "feat: ${{ github.ref_name }}"
           body: |
             This PR was automatically created when changes were pushed to the ${{ github.ref_name }} branch.
-
             Please review the changes and merge when ready.
           labels: auto-pr, feature
+          base: main
+          branch: ${{ github.ref_name }}
           draft: false
           delete-branch: true
