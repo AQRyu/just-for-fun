@@ -1,0 +1,31 @@
+name: Auto Pull Request
+
+on:
+  push:
+    branches:
+      - 'feature/**'
+
+jobs:
+  create-pull-request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Auto-generated PR for ${{ github.ref_name }}"
+          title: "feat: ${{ github.ref_name }}"
+          body: |
+            This PR was automatically created when changes were pushed to the ${{ github.ref_name }} branch.
+
+            Please review the changes and merge when ready.
+          base: main
+          branch: ${{ github.ref_name }}
+          labels: auto-pr, feature
+          draft: false
+          delete-branch: true
