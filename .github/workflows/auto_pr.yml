@@ -27,8 +27,6 @@ jobs:
             This PR was automatically created when changes were pushed to the ${{ github.ref_name }} branch.
 
             Please review the changes and merge when ready.
-          base: main
-          branch: ${{ github.ref_name }}
           labels: auto-pr, feature
           draft: false
           delete-branch: true
