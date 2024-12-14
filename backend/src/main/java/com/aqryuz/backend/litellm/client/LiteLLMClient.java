@@ -5,6 +5,8 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
+import com.aqryuz.backend.litellm.client.payload.ChatCompletionsRequest;
+import com.aqryuz.backend.litellm.client.payload.ChatCompletionsResponse;
 import com.aqryuz.backend.litellm.config.LiteLLMProperties;
 
 import lombok.extern.slf4j.Slf4j;
@@ -24,4 +26,13 @@ public class LiteLLMClient {
         .build();
   }
 
+  public ChatCompletionsResponse zeroShot(ChatCompletionsRequest chatCompletionsRequest) {
+
+    return restClient.post()
+        .uri("/chat/completions")
+        .body(chatCompletionsRequest)
+        .retrieve()
+        .body(ChatCompletionsResponse.class);
+
+  }
 }
