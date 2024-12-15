@@ -43,6 +43,7 @@
 		<mapstruct.version>1.6.3</mapstruct.version>  <!-- Define Mapstruct version here -->
 		<lombok.version>1.18.34</lombok.version> <!-- Define Lombok version here -->
 		<springdoc-openapi.version>2.7.0</springdoc-openapi.version>  <!-- Define Springdoc version -->
+		<jwt.version>0.12.6</jwt.version>  <!-- Define Springdoc version -->
 	</properties>
 
 	<dependencies>
@@ -63,6 +64,24 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>${jwt.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>${jwt.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>${jwt.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
 
 		<!-- Spring Modulith -->
 		<dependency>

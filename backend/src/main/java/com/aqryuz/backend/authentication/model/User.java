@@ -1,4 +1,4 @@
-package com.aqryuz.backend.authentication.dto;
+package com.aqryuz.backend.authentication.model;
 
 import java.util.Collection;
 import java.util.List;

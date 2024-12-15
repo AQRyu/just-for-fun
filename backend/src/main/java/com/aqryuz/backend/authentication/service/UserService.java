@@ -6,10 +6,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.aqryuz.backend.authentication.dto.RegistrationRequest;
-import com.aqryuz.backend.authentication.dto.Role;
-import com.aqryuz.backend.authentication.dto.User;
+import com.aqryuz.backend.authentication.controller.payload.RegistrationRequest;
 import com.aqryuz.backend.authentication.exception.DuplicateUsernameException;
+import com.aqryuz.backend.authentication.model.Role;
+import com.aqryuz.backend.authentication.model.User;
 import com.aqryuz.backend.authentication.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;

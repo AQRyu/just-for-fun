@@ -1,4 +1,4 @@
-package com.aqryuz.backend.authentication.dto;
+package com.aqryuz.backend.authentication.model;
 
 public enum Role {
   ADMIN,
