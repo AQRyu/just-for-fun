@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.aqryuz.backend.authentication.dto.LoginRequest;
-import com.aqryuz.backend.authentication.dto.LoginResponse;
-import com.aqryuz.backend.authentication.dto.RegistrationRequest;
-import com.aqryuz.backend.authentication.dto.User;
-import com.aqryuz.backend.authentication.dto.UserRegistrationResponse;
+import com.aqryuz.backend.authentication.controller.payload.LoginRequest;
+import com.aqryuz.backend.authentication.controller.payload.LoginResponse;
+import com.aqryuz.backend.authentication.controller.payload.RegistrationRequest;
+import com.aqryuz.backend.authentication.controller.payload.UserRegistrationResponse;
 import com.aqryuz.backend.authentication.exception.DuplicateUsernameException;
 import com.aqryuz.backend.authentication.service.UserService;
 import com.aqryuz.backend.authentication.util.JwtUtils;
 import com.aqryuz.backend.mapper.UserMapper;
+import com.aqryuz.backend.model.User;
 
 import lombok.RequiredArgsConstructor;
 
