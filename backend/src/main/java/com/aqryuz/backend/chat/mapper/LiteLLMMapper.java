@@ -1,4 +1,4 @@
-package com.aqryuz.backend.chat.controller.mapper;
+package com.aqryuz.backend.chat.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

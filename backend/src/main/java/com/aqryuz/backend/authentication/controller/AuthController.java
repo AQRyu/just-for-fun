@@ -18,10 +18,10 @@ import com.aqryuz.backend.authentication.controller.payload.LoginResponse;
 import com.aqryuz.backend.authentication.controller.payload.RegistrationRequest;
 import com.aqryuz.backend.authentication.controller.payload.UserRegistrationResponse;
 import com.aqryuz.backend.authentication.exception.DuplicateUsernameException;
+import com.aqryuz.backend.authentication.mapper.UserMapper;
+import com.aqryuz.backend.authentication.model.User;
 import com.aqryuz.backend.authentication.service.UserService;
 import com.aqryuz.backend.authentication.util.JwtUtils;
-import com.aqryuz.backend.mapper.UserMapper;
-import com.aqryuz.backend.model.User;
 
 import lombok.RequiredArgsConstructor;
 

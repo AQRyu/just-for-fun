@@ -8,9 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.aqryuz.backend.authentication.controller.payload.RegistrationRequest;
 import com.aqryuz.backend.authentication.exception.DuplicateUsernameException;
+import com.aqryuz.backend.authentication.model.Role;
+import com.aqryuz.backend.authentication.model.User;
 import com.aqryuz.backend.authentication.repository.UserRepository;
-import com.aqryuz.backend.model.Role;
-import com.aqryuz.backend.model.User;
 
 import lombok.RequiredArgsConstructor;
 
