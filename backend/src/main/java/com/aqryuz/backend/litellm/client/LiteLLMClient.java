@@ -17,9 +17,8 @@ public class LiteLLMClient {
 
   private final RestClient restClient;
 
-  public LiteLLMClient(LiteLLMProperties liteLLMProperties) {
-    this.restClient = RestClient
-        .builder()
+  public LiteLLMClient(LiteLLMProperties liteLLMProperties, RestClient.Builder restClientBuilder) {
+    this.restClient = restClientBuilder
         .baseUrl(liteLLMProperties.getUrl())
         .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
         .defaultHeader("Authorization", "Bearer " + liteLLMProperties.getKey())

@@ -12,11 +12,11 @@ public record ChatCompletionsRequest(
     Double presence_penalty,
     List<String> stop) {
 
-  public ChatCompletionsRequest(String model, List<ChatMessage> messages) {
-    this(model, messages, null, null, null, null, null, null);
+  public ChatCompletionsRequest(List<ChatMessage> messages) {
+    this("gemini-1.5-pro", messages, null, null, null, null, null, null);
   }
 
-}
+  public record ChatMessage(String role, String content) {
+  }
 
-record ChatMessage(String role, String content) {
 }
