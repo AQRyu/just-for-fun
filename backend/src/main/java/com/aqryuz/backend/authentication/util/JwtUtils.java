@@ -5,10 +5,12 @@ import java.util.Date;
 import javax.crypto.SecretKey;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import com.aqryuz.backend.authentication.config.JWTProperties;
+import com.aqryuz.backend.authentication.model.User;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -31,16 +33,18 @@ public class JwtUtils {
 
   public String generateJwtToken(Authentication authentication) {
     UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
+    User user = (User) authentication.getPrincipal();
 
     try {
       return Jwts.builder()
           .claim(Claims.SUBJECT, userPrincipal.getUsername())
-          .claim(Claims.ISSUED_AT, new Date()) // Use claim() with Claims.ISSUED_AT
-          .claim(Claims.EXPIRATION, new Date((new Date()).getTime() + jwtExpirationMs)) // Also use claim for expiration
-                                                                                        // for consistency
+          .claim("userId", user.getId())
+          .claim("roles",
+              user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList())
+          .claim(Claims.ISSUED_AT, new Date())
+          .claim(Claims.EXPIRATION, new Date((new Date()).getTime() + jwtExpirationMs))
           .signWith(jwtSecret)
           .compact();
-
     } catch (JwtException e) {
       log.info("invalid signature");
       return null;
