@@ -4,10 +4,11 @@ import java.util.Date;
 
 import javax.crypto.SecretKey;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
+import com.aqryuz.backend.authentication.config.JWTProperties;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
@@ -19,14 +20,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class JwtUtils {
 
-  @Value("${jwt.expirationMs}")
-  private int jwtExpirationMs;
+  private final int jwtExpirationMs;
 
   private final SecretKey jwtSecret; // Store as SecretKey
 
-  public JwtUtils(@Value("${jwt.secret}") String jwtSecretString) {
-    this.jwtSecret = Keys.hmacShaKeyFor(jwtSecretString.getBytes()); // Initialize SecretKey
-
+  public JwtUtils(JWTProperties jwt) {
+    this.jwtSecret = Keys.hmacShaKeyFor(jwt.getSecret().getBytes()); // Initialize SecretKey
+    this.jwtExpirationMs = jwt.getExpirationMs();
   }
 
   public String generateJwtToken(Authentication authentication) {
