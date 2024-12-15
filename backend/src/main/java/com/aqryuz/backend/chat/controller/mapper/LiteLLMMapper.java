@@ -10,7 +10,7 @@ import com.aqryuz.backend.litellm.client.payload.ChatCompletionsResponse;
 
 @Mapper(componentModel = "spring")
 public interface LiteLLMMapper {
-  @Mapping(target = "model", ignore = true)
+  @Mapping(target = "model", constant = "gemini-1.5-pro")
   @Mapping(target = "temperature", ignore = true)
   @Mapping(target = "max_tokens", ignore = true)
   @Mapping(target = "top_p", ignore = true)
