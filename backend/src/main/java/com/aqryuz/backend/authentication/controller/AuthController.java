@@ -3,6 +3,7 @@ package com.aqryuz.backend.authentication.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -43,7 +44,6 @@ public class AuthController {
 
   @PostMapping("/login")
   public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
-    try {
       Authentication authentication = authenticationManager.authenticate(
           new UsernamePasswordAuthenticationToken(request.username(), request.password()));
 
@@ -53,16 +53,23 @@ public class AuthController {
       LoginResponse response = new LoginResponse(jwt);
       return ResponseEntity.ok(response);
 
-    } catch (Exception ex) {
-      // Handle authentication exceptions (e.g., BadCredentialsException)
-      return ResponseEntity.status(401).build(); // Or return a more specific error response
-
     }
-  }
 
   @ExceptionHandler(DuplicateUsernameException.class)
-  @ResponseStatus(HttpStatus.BAD_REQUEST) // 400 Bad Request
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
   public String handleDuplicateUsername(DuplicateUsernameException ex) {
+    return ex.getMessage(); // Return the exception message
+  }
+
+  @ExceptionHandler(BadCredentialsException.class)
+  @ResponseStatus(HttpStatus.UNAUTHORIZED)
+  public String handleBadCredentials(BadCredentialsException ex) {
+    return ex.getMessage(); // Return the exception message
+  }
+
+  @ExceptionHandler(Exception.class)
+  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+  public String handleUnknownError(Exception ex) {
     return ex.getMessage(); // Return the exception message
   }
 }
