@@ -1,12 +1,11 @@
 package com.aqryuz.backend.chat.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-
 import com.aqryuz.backend.chat.controller.payload.ZeroShotRequest;
 import com.aqryuz.backend.chat.controller.payload.ZeroShotResponse;
 import com.aqryuz.backend.litellm.client.payload.ChatCompletionsRequest;
 import com.aqryuz.backend.litellm.client.payload.ChatCompletionsResponse;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface LiteLLMMapper {
@@ -26,5 +25,4 @@ public interface LiteLLMMapper {
       return new ZeroShotResponse("No response from the LLM.");
     }
   }
-
 }
