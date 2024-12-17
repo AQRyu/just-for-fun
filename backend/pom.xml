@@ -44,6 +44,7 @@
 		<lombok.version>1.18.34</lombok.version> <!-- Define Lombok version here -->
 		<springdoc-openapi.version>2.7.0</springdoc-openapi.version>  <!-- Define Springdoc version -->
 		<jwt.version>0.12.6</jwt.version>  <!-- Define Springdoc version -->
+		<spotless.version>2.44.0.BETA4</spotless.version>
 	</properties>
 
 	<dependencies>
@@ -184,6 +185,26 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>com.diffplug.spotless</groupId>
+				<artifactId>spotless-maven-plugin</artifactId>
+				<version>{spotless.version}</version> <!-- Latest version -->
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal> <!-- For validation -->
+							<goal>apply</goal> <!-- For auto-formatting -->
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<java>
+						<googleJavaFormat />
+					</java>
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 
