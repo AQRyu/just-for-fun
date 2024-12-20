@@ -16,7 +16,5 @@ public record ChatCompletionsRequest(
     this("gemini-1.5-pro", messages, null, null, null, null, null, null);
   }
 
-  public record ChatMessage(String role, String content) {
-  }
-
+  public record ChatMessage(String role, String content) {}
 }

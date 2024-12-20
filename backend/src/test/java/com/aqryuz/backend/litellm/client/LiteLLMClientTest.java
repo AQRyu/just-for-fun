@@ -11,6 +11,13 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withStatus;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
+import com.aqryuz.backend.BackendApplication;
+import com.aqryuz.backend.litellm.client.payload.ChatCompletionsRequest;
+import com.aqryuz.backend.litellm.client.payload.ChatCompletionsResponse;
+import com.aqryuz.backend.litellm.config.LiteLLMProperties;
+import com.aqryuz.backend.litellm.exception.LiteLLMClientException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -21,34 +28,21 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.client.MockRestServiceServer;
 
-import com.aqryuz.backend.BackendApplication;
-import com.aqryuz.backend.litellm.client.payload.ChatCompletionsRequest;
-import com.aqryuz.backend.litellm.client.payload.ChatCompletionsResponse;
-import com.aqryuz.backend.litellm.config.LiteLLMProperties;
-import com.aqryuz.backend.litellm.exception.LiteLLMClientException;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-@RestClientTest({ LiteLLMClient.class, BackendApplication.class }) // This annotation is key!
+@RestClientTest({LiteLLMClient.class, BackendApplication.class}) // This annotation is key!
 @EnableConfigurationProperties(LiteLLMProperties.class) // Add this line
-@TestPropertySource(properties = {
-    "litellm.api.url=test",
-    "litellm.api.key=sk-*"
-})
+@TestPropertySource(properties = {"litellm.api.url=test", "litellm.api.key=sk-*"})
 class LiteLLMClientTest {
 
-  @Autowired
-  private LiteLLMClient liteLLMClient;
+  @Autowired private LiteLLMClient liteLLMClient;
 
-  @Autowired
-  private MockRestServiceServer server;
+  @Autowired private MockRestServiceServer server;
 
-  @Autowired
-  private ObjectMapper objectMapper;
+  @Autowired private ObjectMapper objectMapper;
 
   @Test
   void testZeroShotWithRestClientTest() throws JsonProcessingException {
-    String jsonReq = """
+    String jsonReq =
+        """
         {
           "messages": [
             {
@@ -64,7 +58,8 @@ class LiteLLMClientTest {
         """;
     var req = objectMapper.readValue(jsonReq, ChatCompletionsRequest.class);
 
-    String jsonRes = """
+    String jsonRes =
+        """
         {
           "id": "chatcmpl-7t9z8PLwYb7qdzVOn3kGH8tMem1s1",
           "choices": [
@@ -90,7 +85,8 @@ class LiteLLMClientTest {
         """;
     var res = new ObjectMapper().readValue(jsonRes, ChatCompletionsResponse.class);
 
-    this.server.expect(once(), requestTo("test/chat/completions"))
+    this.server
+        .expect(once(), requestTo("test/chat/completions"))
         .andExpect(method(HttpMethod.POST))
         .andExpect(content().json(jsonReq))
         .andRespond(withSuccess(jsonRes, MediaType.APPLICATION_JSON));
@@ -99,13 +95,13 @@ class LiteLLMClientTest {
 
     assertEquals(res, actualResponse);
     this.server.verify();
-
   }
 
   @Test
   void testZeroShotBadRequest() throws JsonProcessingException {
 
-    this.server.expect(once(), requestTo("test/chat/completions"))
+    this.server
+        .expect(once(), requestTo("test/chat/completions"))
         .andExpect(method(HttpMethod.POST))
         .andRespond(withBadRequest().body("Bad Request"));
 
@@ -117,7 +113,8 @@ class LiteLLMClientTest {
 
   @Test
   void testZeroShotServerError() throws JsonProcessingException {
-    this.server.expect(once(), requestTo("test/chat/completions"))
+    this.server
+        .expect(once(), requestTo("test/chat/completions"))
         .andExpect(method(HttpMethod.POST))
         .andRespond(withServerError().body("Internal Server Error"));
 
@@ -130,7 +127,8 @@ class LiteLLMClientTest {
 
   @Test
   void testZeroShotOtherError() throws JsonProcessingException {
-    this.server.expect(once(), requestTo("test/chat/completions"))
+    this.server
+        .expect(once(), requestTo("test/chat/completions"))
         .andExpect(method(HttpMethod.POST))
         .andRespond(withStatus(HttpStatus.FORBIDDEN).body("Forbidden"));
 
@@ -142,7 +140,8 @@ class LiteLLMClientTest {
 
   // Helper function to create a sample request
   private ChatCompletionsRequest createChatCompletionsRequest() throws JsonProcessingException {
-    String jsonReq = """
+    String jsonReq =
+        """
         {
           "messages": [
             {

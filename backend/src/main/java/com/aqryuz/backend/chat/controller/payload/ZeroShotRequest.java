@@ -1,8 +1,6 @@
 package com.aqryuz.backend.chat.controller.payload;
 
+import com.aqryuz.backend.litellm.client.payload.ChatCompletionsRequest.ChatMessage;
 import java.util.List;
 
-import com.aqryuz.backend.litellm.client.payload.ChatCompletionsRequest.ChatMessage;
-
-public record ZeroShotRequest(List<ChatMessage> messages) {
-}
+public record ZeroShotRequest(List<ChatMessage> messages) {}
