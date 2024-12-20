@@ -1,20 +1,18 @@
 package com.aqryuz.backend.chat.controller;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.aqryuz.backend.chat.controller.payload.ZeroShotRequest;
 import com.aqryuz.backend.chat.controller.payload.ZeroShotResponse;
 import com.aqryuz.backend.chat.mapper.LiteLLMMapper;
 import com.aqryuz.backend.litellm.client.LiteLLMClient;
 import com.aqryuz.backend.litellm.client.payload.ChatCompletionsRequest;
 import com.aqryuz.backend.litellm.client.payload.ChatCompletionsResponse;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/chat")
@@ -33,7 +31,8 @@ public class ZeroShotController {
       return ResponseEntity.ok(response);
     } catch (Exception e) {
       log.error("Error during zero-shot processing: {}", e.getMessage(), e);
-      return ResponseEntity.internalServerError().body(new ZeroShotResponse("Error processing request."));
+      return ResponseEntity.internalServerError()
+          .body(new ZeroShotResponse("Error processing request."));
     }
   }
 }

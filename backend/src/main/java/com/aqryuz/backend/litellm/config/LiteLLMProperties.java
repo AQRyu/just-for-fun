@@ -1,12 +1,11 @@
 package com.aqryuz.backend.litellm.config;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
-import org.springframework.validation.annotation.Validated;
-
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
 @Component
 @ConfigurationProperties(prefix = "litellm.api")
@@ -15,10 +14,7 @@ import lombok.Setter;
 @Setter
 public class LiteLLMProperties {
 
-  @NotEmpty
-  private String url;
+  @NotEmpty private String url;
 
-  @NotEmpty
-  private String key;
-
+  @NotEmpty private String key;
 }
