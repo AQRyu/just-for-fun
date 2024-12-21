@@ -2,13 +2,13 @@ Work Item Type,Title 1,Title 2,Title 3,Description,Iteration Path,Area Path,Tags
 Epic,Implement Group Chat,,,Implement functionality for group chat.,Sprint 3,Chat Application,Group Chat,,1
 User Story,,Create Group Chat,,"As a user, I want to create a new group chat so I can communicate with multiple people at once.",Sprint 3,Chat Application,Group Chat;Create;UI,"Users can create new group chats and add other users.",2
 Task,,,Implement group creation API endpoint,"Create API endpoint to handle group creation requests.",Sprint 3,Chat Application,Group Chat;API;Backend,"API endpoint created and tested.",3
-Task,,,Implement group creation UI,"Implement UI elements for creating a new group.",Sprint 3,Chat Application,Group Chat;UI;Vue.js,"UI elements for group creation implemented and functional.",3
+Task,,,Implement group creation UI,"Implement UI elements for creating a new group.",Sprint 3,Chat Application,Group Chat;UI;React.js,"UI elements for group creation implemented and functional.",3
 User Story,,Join Group Chat,,"As a user, I want to join an existing group chat so I can participate in the conversation.",Sprint 3,Chat Application,Group Chat;Join;UI,"Users can join existing group chats.",2
 Task,,,Implement group joining API endpoint,"Create API endpoint to handle group joining requests.",Sprint 3,Chat Application,Group Chat;API;Backend,"API endpoint created and tested.",3
-Task,,,Implement group joining UI,"Implement UI elements for joining a group.",Sprint 3,Chat Application,Group Chat;UI;Vue.js,"UI elements for joining a group implemented and functional.",3
+Task,,,Implement group joining UI,"Implement UI elements for joining a group.",Sprint 3,Chat Application,Group Chat;UI;React.js,"UI elements for joining a group implemented and functional.",3
 User Story,,Send and Receive Messages in Group Chat,,"As a user, I want to send and receive messages within a group chat so I can communicate with the group members.",Sprint 3,Chat Application,Group Chat;Messaging;UI,"Users can send and receive messages within a group chat.",2
 Task,,,Implement group messaging API endpoint,"Create API endpoint to handle sending and receiving messages in a group.",Sprint 3,Chat Application,Group Chat;API;Backend,"API endpoint created and tested.",3
-Task,,,Implement group messaging UI,"Update the chat UI to display and handle group messages.",Sprint 3,Chat Application,Group Chat;UI;Vue.js,"Group messaging functionality integrated into the chat UI.",3
+Task,,,Implement group messaging UI,"Update the chat UI to display and handle group messages.",Sprint 3,Chat Application,Group Chat;UI;React.js,"Group messaging functionality integrated into the chat UI.",3
 User Story,,Leave Group Chat,,"As a user, I want to leave a group chat so I no longer receive messages from that group.",Sprint 3,Chat Application,Group Chat;Leave;UI,"Users can leave group chats.",2
 Task,,,Implement group leaving API endpoint,"Create API endpoint to handle leaving group requests.",Sprint 3,Chat Application,Group Chat;API;Backend,"API endpoint created and tested.",3
-Task,,,Implement group leaving UI,"Implement UI elements for leaving a group.",Sprint 3,Chat Application,Group Chat;UI;Vue.js,"UI elements for leaving a group implemented and functional.",3
+Task,,,Implement group leaving UI,"Implement UI elements for leaving a group.",Sprint 3,Chat Application,Group Chat;UI;React.js,"UI elements for leaving a group implemented and functional.",3

@@ -1,7 +1,7 @@
 Work Item Type,Title 1,Title 2,Title 3,Description,Iteration Path,Area Path,Tags,Acceptance Criteria,Priority
 Epic,Enhance Chat UI,,,Improve the visual appeal and usability of the chat interface.,Sprint 2,Chat Application,UI,,1
 User Story,,Visually Appealing Chat Interface,,"As a user, I want a visually appealing and user-friendly chat interface so that I have a pleasant chatting experience.",Sprint 2,Chat Application,UI,"Chat interface is visually appealing, messages are clearly displayed with timestamps, and the UI is responsive.",2
-Task,,,Implement Vue.js components for chat messages,"Implement Vue.js components for displaying chat messages.",Sprint 2,Chat Application,UI;Vue.js,"Vue.js components implemented and integrated into the chat interface.",3
+Task,,,Implement React.js components for chat messages,"Implement React.js components for displaying chat messages.",Sprint 2,Chat Application,UI;React.js,"React.js components implemented and integrated into the chat interface.",3
 Task,,,Style chat messages with CSS for improved readability,"Style chat messages with CSS for better readability.",Sprint 2,Chat Application,UI;CSS,"Chat messages are styled for improved readability.",3
 Task,,,Implement message timestamps,"Add timestamps to chat messages.",Sprint 2,Chat Application,UI;Timestamps,"Message timestamps are displayed correctly.",3
 User Story,,Real-time Message Updates,,"As a user, I want real-time message updates so I can see new messages without manually refreshing.",Sprint 2,Chat Application,UI;Real-time,"New messages appear in the chat window instantly without requiring a page refresh.",2

@@ -8,7 +8,7 @@ This plan outlines the key features and timelines for developing the OpenAI Chat
   * Focus: Core chat functionality, user authentication, basic API.
   * Deliverables: Functional single chat, user registration/login/logout, API endpoints for messaging.
 * **Sprint 2: Enhanced Chat UI and User Management**
-  * Focus: Improved Vue.js UI, user profiles, basic notification system.
+  * Focus: Improved React.js UI, user profiles, basic notification system.
   * Deliverables: Visually appealing chat interface, user profile management, optional notifications for new messages.
 * **Sprint 3: Group Chat**
   * Focus: Implementing group chat functionality.
