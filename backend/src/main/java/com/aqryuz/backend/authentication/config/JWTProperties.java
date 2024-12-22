@@ -1,13 +1,12 @@
 package com.aqryuz.backend.authentication.config;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
-import org.springframework.validation.annotation.Validated;
-
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
 @Component
 @ConfigurationProperties(prefix = "jwt")
@@ -16,8 +15,7 @@ import lombok.Setter;
 @Setter
 public class JWTProperties {
 
-  @NotNull
-  private Long expirationMs;
+  @NotNull private Long expirationMs;
 
   @NotEmpty private String secret;
 }
