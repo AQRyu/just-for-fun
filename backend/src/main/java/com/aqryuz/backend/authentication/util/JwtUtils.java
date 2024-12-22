@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class JwtUtils {
 
-  private final Long jwtExpirationMs;
+  private final int jwtExpirationMs;
 
   private final SecretKey jwtSecret; // Store as SecretKey
 
