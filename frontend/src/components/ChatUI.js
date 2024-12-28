@@ -25,6 +25,14 @@ function ChatUI({ messages, sendMessage, newMessage, setNewMessage }) {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      // Send only if Enter is pressed without Shift
+      e.preventDefault(); // Prevent newline character in the textfield
+      handleSendMessage();
+    }
+  };
+
   const messageDataForLibrary = messages.map((message) => ({
     position: message.sender === "user" ? "right" : "left",
     type: "text",
@@ -59,6 +67,7 @@ function ChatUI({ messages, sendMessage, newMessage, setNewMessage }) {
           sx={{ flexGrow: 1, marginRight: "10px" }}
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
+          onKeyDown={handleKeyDown}
         />
         <IconButton>
           <AttachFileIcon />
