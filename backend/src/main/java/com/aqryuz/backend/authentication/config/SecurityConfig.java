@@ -25,8 +25,8 @@ public class SecurityConfig {
                     .permitAll() // Permit access to auth endpoints
                     .requestMatchers("/swagger-ui/**", "/v3/api-docs/**")
                     .permitAll() // Allow Swagger UI and API docs
-            .requestMatchers("/ws/**")
-            .permitAll()
+                    .requestMatchers("/ws/**")
+                    .permitAll()
                     .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
                     .permitAll() // Allow static resources
                     .anyRequest()
