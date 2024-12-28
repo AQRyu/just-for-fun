@@ -3,16 +3,23 @@
   "name": "Full Stack Debug",
   "configurations": [
     {
-      "name": "Debug Frontend (Edge)",
-      "type": "msedge",
+      "command": "npm start",
+      "name": "Run npm start",
       "request": "launch",
-      "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}/frontend",
-      "sourceMapPathOverrides": {
-        "webpack:///./src/*": "${workspaceFolder}/frontend/src/*",
-        "webpack:///src/*": "${workspaceFolder}/frontend/src/*"
-      }
+      "type": "node-terminal",
+      "cwd": "${workspaceFolder}/frontend"
     },
+    // {
+    //   "name": "Debug Frontend (Edge)",
+    //   "type": "msedge",
+    //   "request": "launch",
+    //   "url": "http://localhost:3000",
+    //   "webRoot": "${workspaceFolder}/frontend",
+    //   "sourceMapPathOverrides": {
+    //     "webpack:///./src/*": "${workspaceFolder}/frontend/src/*",
+    //     "webpack:///src/*": "${workspaceFolder}/frontend/src/*"
+    //   }
+    // },
     {
       "type": "java",
       "name": "Debug Backend (Spring Boot)",
@@ -29,7 +36,7 @@
       "name": "Full Stack Debug",
       "configurations": [
         "Debug Backend (Spring Boot)",
-        "Debug Frontend (Edge)"
+        "Run npm start"
       ]
     }
   ]
