@@ -11,47 +11,25 @@ import {
 import React, { useState } from "react";
 import { MessageList } from "react-chat-elements"; // If using react-chat-elements
 
-function ChatUI() {
+function ChatUI({ messages, sendMessage, newMessage, setNewMessage }) {
+  // Receive props
   const [currentMessage, setCurrentMessage] = useState("");
-  const [messages, setMessages] = useState([
-    // Initial example messages (replace with your actual message data)
-    {
-      id: 1,
-      position: "right",
-      type: "text",
-      text: "Hello!",
-      date: new Date(),
-    },
-    {
-      id: 2,
-      position: "left",
-      type: "text",
-      text: "Hi there!",
-      date: new Date(),
-    },
-  ]);
+
   const [newMessageCount, setNewMessageCount] = useState(0); // For notifications (optional)
 
   const handleSendMessage = () => {
-    if (currentMessage.trim() !== "") {
-      const newMessage = {
-        id: messages.length + 1,
-        position: "right", // Or 'left' depending on the sender
-        type: "text",
-        text: currentMessage,
-        date: new Date(),
-      };
-      setMessages([...messages, newMessage]);
-      setCurrentMessage(""); // Clear input field
+    if (newMessage.trim() !== "") {
+      // Prevent sending empty messages
+      sendMessage(newMessage);
+      setNewMessage(""); // Clear the input field. This is crucial!
     }
   };
 
-  // Example using react-chat-elements (adapt your data structure)
   const messageDataForLibrary = messages.map((message) => ({
-    position: message.position,
-    type: message.type,
-    text: message.text,
-    date: message.date,
+    position: message.sender === "user" ? "right" : "left",
+    type: "text",
+    text: message.content,
+    date: new Date(message.timestamp),
   }));
 
   return (
@@ -79,14 +57,8 @@ function ChatUI() {
           label="Type your message"
           variant="outlined"
           sx={{ flexGrow: 1, marginRight: "10px" }}
-          value={currentMessage}
-          onChange={(e) => setCurrentMessage(e.target.value)}
-          onKeyDown={(e) => {
-            // Allow sending with Enter key
-            if (e.key === "Enter") {
-              handleSendMessage();
-            }
-          }}
+          value={newMessage}
+          onChange={(e) => setNewMessage(e.target.value)}
         />
         <IconButton>
           <AttachFileIcon />
