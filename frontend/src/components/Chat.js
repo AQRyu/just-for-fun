@@ -23,12 +23,22 @@ function Chat() {
       // Ensure connection before subscribing
       client.subscribe("/topic/newMessage", (message) => {
         console.log(message);
-        setMessages([...messages, JSON.parse(message.body)]);
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          JSON.parse(message.body),
+        ]);
       });
     };
 
+    client.onStompError = (frame) => {
+      console.error("Broker reported error: ", frame.headers["message"]);
+      console.error("Additional details: ", frame.body);
+    };
+
     return () => {
-      client.deactivate();
+      if (client.active) {
+        client.deactivate();
+      }
     };
   }, [messages]);
 
