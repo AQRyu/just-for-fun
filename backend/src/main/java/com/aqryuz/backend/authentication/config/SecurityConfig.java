@@ -12,31 +12,36 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+  private final JwtRequestFilter jwtRequestFilter;
+
+
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http.authorizeHttpRequests(
             authorize ->
                 authorize
                     .requestMatchers("/auth/**")
-                    .permitAll() // Permit access to auth endpoints
+                    .permitAll()
                     .requestMatchers("/swagger-ui/**", "/v3/api-docs/**")
-                    .permitAll() // Allow Swagger UI and API docs
+                    .permitAll()
                     .requestMatchers("/ws/**")
                     .permitAll()
                     .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
                     .permitAll() // Allow static resources
                     .anyRequest()
-                    .authenticated() // All other requests require authentication
-            )
+                    .authenticated())
         .csrf(AbstractHttpConfigurer::disable)
         .sessionManagement(
-            session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-    // Use stateless sessions (e.g., JWT)
-    // ... configure authentication providers (JWT, etc.)
+            session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
   }
