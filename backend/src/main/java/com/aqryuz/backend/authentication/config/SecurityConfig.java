@@ -1,5 +1,6 @@
 package com.aqryuz.backend.authentication.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,45 +10,40 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+  private final JwtRequestFilter jwtRequestFilter;
+
   @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+  SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http.authorizeHttpRequests(
             authorize ->
                 authorize
                     .requestMatchers("/auth/**")
-                    .permitAll() // Permit access to auth endpoints
+                    .permitAll()
                     .requestMatchers("/swagger-ui/**", "/v3/api-docs/**")
-                    .permitAll() // Allow Swagger UI and API docs
+                    .permitAll()
                     .requestMatchers("/ws/**")
                     .permitAll()
                     .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
                     .permitAll() // Allow static resources
                     .anyRequest()
-                    .authenticated() // All other requests require authentication
-            )
+                    .authenticated())
         .csrf(AbstractHttpConfigurer::disable)
         .sessionManagement(
-            session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-    // Use stateless sessions (e.g., JWT)
-    // ... configure authentication providers (JWT, etc.)
+            session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
   }
 
   @Bean
-  public PasswordEncoder passwordEncoder() { // Crucial for password security!
-    return new BCryptPasswordEncoder(); // or other strong hashing algorithm
-  }
-
-  @Bean
-  public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration)
+  AuthenticationManager authenticationManager(AuthenticationConfiguration configuration)
       throws Exception {
     return configuration.getAuthenticationManager();
   }
