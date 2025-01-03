@@ -1,23 +1,25 @@
 package com.aqryuz.backend.authentication.util;
 
-import com.aqryuz.backend.authentication.config.JWTProperties;
-import com.aqryuz.backend.authentication.model.User;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.UnsupportedJwtException;
-import io.jsonwebtoken.security.Keys;
-import io.jsonwebtoken.security.SignatureException;
 import java.util.Date;
+import java.util.List;
 import java.util.function.Function;
+
+import javax.annotation.Nullable;
 import javax.crypto.SecretKey;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
+import com.aqryuz.backend.authentication.config.JWTProperties;
+import com.aqryuz.backend.authentication.model.User;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
@@ -32,65 +34,50 @@ public class JwtUtils {
     this.jwtExpirationMs = jwt.getExpirationMs();
   }
 
+  @Nullable
   public String generateJwtToken(Authentication authentication) {
-    UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
     User user = (User) authentication.getPrincipal();
+    List<String> roles =
+        user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList();
 
     try {
       return Jwts.builder()
-          .claim(Claims.SUBJECT, userPrincipal.getUsername())
+          .subject(user.getUsername())
           .claim("userId", user.getId())
-          .claim(
-              "roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList())
-          .claim(Claims.ISSUED_AT, new Date())
-          .claim(Claims.EXPIRATION, new Date((new Date()).getTime() + jwtExpirationMs))
+          .claim("roles", roles)
+          .issuedAt(new Date())
+          .expiration(new Date((new Date()).getTime() + jwtExpirationMs))
           .signWith(jwtSecret)
           .compact();
     } catch (JwtException e) {
-      log.info("invalid signature");
+      log.error("Error generating JWT token: {}", e.getMessage());
       return null;
     }
   }
 
   public String getUsernameFromToken(String token) {
-    try {
-      Claims claims = getAllClaims(token);
-
-      return claims.get("userId", String.class);
-
-    } catch (ExpiredJwtException e) {
-      log.error("JWT token is expired: {}", e.getMessage());
-    } catch (UnsupportedJwtException e) {
-      log.error("JWT token is unsupported: {}", e.getMessage());
-    } catch (MalformedJwtException e) {
-      log.error("Invalid JWT token: {}", e.getMessage());
-    } catch (SignatureException e) {
-      log.error("Invalid JWT signature: {}", e.getMessage());
-    } catch (IllegalArgumentException e) {
-      log.error("JWT claims string is empty: {}", e.getMessage());
-    }
-    return null;
-  }
-
-  private boolean isTokenExpired(String token) {
-    return getExpiration(token).before(new Date());
-  }
-
-  private Date getExpiration(String token) {
-    return getClaim(token, Claims::getExpiration);
-  }
-
-  public <T> T getClaim(String token, Function<Claims, T> claimsResolver) {
-    final Claims claims = getAllClaims(token);
-    return claimsResolver.apply(claims);
-  }
-
-  private Claims getAllClaims(String token) {
-    return Jwts.parser().verifyWith(jwtSecret).build().parseSignedClaims(token).getPayload();
+    return extractClaim(token, Claims::getSubject);
   }
 
   public boolean validateToken(String token, UserDetails userDetails) {
     String username = getUsernameFromToken(token);
-    return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    return username != null && username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+  }
+
+  private boolean isTokenExpired(String token) {
+    Date expiration = extractClaim(token, Claims::getExpiration);
+    return expiration == null || expiration.before(new Date());
+  }
+
+  @Nullable
+  private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+    try {
+      Claims claims =
+          Jwts.parser().verifyWith(jwtSecret).build().parseSignedClaims(token).getPayload();
+      return claimsResolver.apply(claims);
+    } catch (JwtException e) {
+      log.error("Error extracting claim from JWT: {}", e.getMessage());
+      return null;
+    }
   }
 }
