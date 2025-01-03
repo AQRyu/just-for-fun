@@ -23,7 +23,7 @@ public class SecurityConfig {
                 authorize
                     .requestMatchers("/auth/**")
                     .permitAll() // Permit access to auth endpoints
-                    .requestMatchers("/swagger-ui/**", "/v3/api-docs/**")
+            .requestMatchers("/swagger-ui/**", "/swagger-ui/**", "/v3/api-docs/**")
                     .permitAll() // Allow Swagger UI and API docs
                     .requestMatchers("/ws/**")
                     .permitAll()
