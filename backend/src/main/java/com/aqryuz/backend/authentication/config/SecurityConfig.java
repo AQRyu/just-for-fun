@@ -20,7 +20,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-  private final JwtRequestFilter jwtRequestFilter;
   private final FrontendUrlProperties frontendUrlProperties;
 
   @Bean
@@ -35,7 +34,7 @@ public class SecurityConfig {
                     .requestMatchers("/ws/**")
                     .permitAll()
                     .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
-                    .permitAll() // Allow static resources
+                    .permitAll()
                     .anyRequest()
                     .authenticated())
         .csrf(AbstractHttpConfigurer::disable)

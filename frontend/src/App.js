@@ -1,5 +1,6 @@
 import React from "react";
-import { Link, Route, Routes } from "react-router-dom";
+import { Link, NavLink, Route, Routes } from "react-router-dom";
+import { handleLogout } from "./components/auth";
 import Chat from "./components/Chat";
 import Profile from "./components/Profile";
 import Home from "./pages/Home";
@@ -12,6 +13,15 @@ function App() {
         <Link to="/profile">Profile</Link>
         <Link to="/chat">Chat</Link>
         <Link to="/login">Login</Link>
+        <NavLink
+          to="/"
+          onClick={handleLogout}
+          style={({ isActive }) => ({
+            color: isActive ? "red" : "blue",
+          })}
+        >
+          Logout
+        </NavLink>
       </nav>
 
       <Routes>
