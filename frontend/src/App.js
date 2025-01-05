@@ -2,9 +2,9 @@ import React from "react";
 import { Link, NavLink, Route, Routes } from "react-router-dom";
 import { handleLogout } from "./components/auth";
 import Chat from "./components/Chat";
-import Profile from "./components/Profile";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
