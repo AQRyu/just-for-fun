@@ -5,6 +5,7 @@ import com.aqryuz.backend.authentication.exception.DuplicateUsernameException;
 import com.aqryuz.backend.authentication.model.Role;
 import com.aqryuz.backend.authentication.model.User;
 import com.aqryuz.backend.authentication.repository.UserRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -40,5 +41,9 @@ public class UserService implements UserDetailsService {
     return userRepository
         .findByUsername(username)
         .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+  }
+
+  public Optional<User> findById(Long userId) {
+    return userRepository.findById(userId);
   }
 }
