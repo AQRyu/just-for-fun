@@ -1,7 +1,6 @@
 package com.aqryuz.backend.profile.model;
 
 import com.aqryuz.backend.authentication.model.User;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -36,9 +35,7 @@ public class UserProfile {
   @Email(message = "Invalid email format")
   private String email;
 
-  @Size(
-      max = 255,
-      message = "Bio must be at most 255 characters")
+  @Size(max = 255, message = "Bio must be at most 255 characters")
   private String bio;
 
   private String profilePictureURL;

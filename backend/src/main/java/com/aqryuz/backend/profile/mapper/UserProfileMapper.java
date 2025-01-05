@@ -1,13 +1,12 @@
 package com.aqryuz.backend.profile.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
-
 import com.aqryuz.backend.profile.model.CreateUserProfileRecord;
 import com.aqryuz.backend.profile.model.UpdateUserProfileRecord;
 import com.aqryuz.backend.profile.model.UserProfile;
 import com.aqryuz.backend.profile.model.UserProfileRecord;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface UserProfileMapper {
