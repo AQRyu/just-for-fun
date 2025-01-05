@@ -50,7 +50,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
       return authorizationHeader.substring(7);
     } else {
-      log.warn("JWT Token does not begin with Bearer String or is missing"); // Improved logging
       return null;
     }
   }
