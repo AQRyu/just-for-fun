@@ -6,6 +6,7 @@ import { AuthProvider } from "./context/AuthContext";
 import ChatPage from "./pages/ChatPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   return (
@@ -18,6 +19,8 @@ function App() {
           <Route element={<AuthRoute />}>
             {" "}
             <Route path="/chat" element={<ChatPage />} />
+            <Route path="/profile" element={<ProfilePage />} />{" "}
+            {/* The key line */}
           </Route>
         </Routes>
       </Router>

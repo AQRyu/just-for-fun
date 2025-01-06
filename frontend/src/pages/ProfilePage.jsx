@@ -9,7 +9,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 
-function Profile() {
+function ProfilePage() {
   const [profile, setProfile] = useState(null);
   const [nickName, setNickName] = useState("");
   const [email, setEmail] = useState("");
@@ -160,4 +160,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default ProfilePage;
