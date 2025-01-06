@@ -8,15 +8,17 @@ const Navbar = () => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          My Chat App
-        </Typography>
+        <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}>
+          {" "}
+          {/* Added Box for alignment */}
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <Typography variant="h6" component="div" sx={{ color: "#FFFFFF" }}>
+              My Chat App
+            </Typography>
+          </Link>
+        </Box>
 
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <Link to="/" style={{ textDecoration: "none", marginRight: "1rem" }}>
-            <Button sx={{ color: "#FFFFFF" }}>Home</Button>{" "}
-          </Link>
-
           {isAuthenticated ? (
             <Button sx={{ color: "#FFFFFF" }} onClick={handleLogout}>
               Logout
