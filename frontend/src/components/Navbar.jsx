@@ -14,16 +14,16 @@ const Navbar = () => {
 
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <Link to="/" style={{ textDecoration: "none", marginRight: "1rem" }}>
-            <Button color="inherit">Home</Button>{" "}
+            <Button sx={{ color: "#FFFFFF" }}>Home</Button>{" "}
           </Link>
 
           {isAuthenticated ? (
-            <Button color="inherit" onClick={handleLogout}>
+            <Button sx={{ color: "#FFFFFF" }} onClick={handleLogout}>
               Logout
             </Button>
           ) : (
             <Link to="/login" style={{ textDecoration: "none" }}>
-              <Button color="inherit">Login</Button>
+              <Button sx={{ color: "#FFFFFF" }}>Login</Button>
             </Link>
           )}
         </Box>
