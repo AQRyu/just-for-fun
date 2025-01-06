@@ -1,18 +1,27 @@
 import React from "react";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import { AuthProvider } from "./components/AuthContext";
+import AuthRoute from "./components/AuthRoute";
+import Navbar from "./components/Navbar";
 import ChatPage from "./pages/ChatPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/chat" element={<ChatPage />} />
-        <Route path="/login" element={<LoginPage />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route element={<AuthRoute />}>
+            {" "}
+            <Route path="/chat" element={<ChatPage />} />
+          </Route>
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

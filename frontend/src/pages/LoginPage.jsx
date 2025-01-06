@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../components/AuthContext";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -15,6 +16,8 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const { handleLogin } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,7 +38,7 @@ const LoginPage = () => {
 
       if (response.ok) {
         const data = await response.json();
-        localStorage.setItem("user", data.jwt);
+        handleLogin(data.jwt);
         navigate("/");
       } else {
         const errorData = await response.json();
