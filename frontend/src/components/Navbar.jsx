@@ -1,6 +1,6 @@
 import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useAuth } from "./AuthContext";
+import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
   const { isAuthenticated, handleLogout } = useAuth();
