@@ -1,7 +1,15 @@
+import {
+  Avatar,
+  Box,
+  Button,
+  Container,
+  TextField,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 
-function Profile() {
+function ProfilePage() {
   const [profile, setProfile] = useState(null);
   const [nickName, setNickName] = useState("");
   const [email, setEmail] = useState("");
@@ -101,33 +109,55 @@ function Profile() {
   }
 
   return (
-    <div>
-      <input
-        type="text"
-        value={nickName}
-        onChange={(e) => setNickName(e.target.value)}
-        placeholder="Nickname"
-      />
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-      />
-      <textarea
-        value={bio}
-        onChange={(e) => setBio(e.target.value)}
-        placeholder="Bio"
-      />
-      <input
-        type="text"
-        value={profilePictureURL}
-        onChange={(e) => setProfilePictureURL(e.target.value)}
-        placeholder="Profile Picture URL"
-      />
-      <button onClick={updateProfile}>Update Profile</button>
-    </div>
+    <Container maxWidth="sm" sx={{ mt: 4, mb: 4 }}>
+      <Typography variant="h4" align="center" gutterBottom>
+        Profile
+      </Typography>
+      <Box
+        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+      >
+        <Avatar
+          alt="Profile Picture"
+          src={profilePictureURL || ""}
+          sx={{ width: 100, height: 100, mb: 2 }}
+        />
+        <TextField
+          label="Nickname"
+          value={nickName}
+          onChange={(e) => setNickName(e.target.value)}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Bio"
+          multiline
+          rows={4}
+          value={bio}
+          onChange={(e) => setBio(e.target.value)}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Profile Picture URL"
+          value={profilePictureURL}
+          onChange={(e) => setProfilePictureURL(e.target.value)}
+          fullWidth
+          margin="normal"
+        />
+        <Button variant="contained" onClick={updateProfile} sx={{ mt: 2 }}>
+          Update Profile
+        </Button>
+      </Box>
+    </Container>
   );
 }
 
-export default Profile;
+export default ProfilePage;

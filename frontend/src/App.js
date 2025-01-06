@@ -1,37 +1,30 @@
 import React from "react";
-import { Link, NavLink, Route, Routes } from "react-router-dom";
-import { handleLogout } from "./components/auth";
-import Chat from "./components/Chat";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Profile from "./pages/Profile";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import AuthRoute from "./components/AuthRoute";
+import Navbar from "./components/Navbar";
+import { AuthProvider } from "./context/AuthContext";
+import ChatPage from "./pages/ChatPage";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   return (
-    <div>
-      <nav>
-        <Link to="/profile">Profile</Link>
-        <Link to="/chat">Chat</Link>
-        <Link to="/login">Login</Link>
-        <NavLink
-          to="/"
-          onClick={handleLogout}
-          style={({ isActive }) => ({
-            color: isActive ? "red" : "blue",
-          })}
-        >
-          Logout
-        </NavLink>
-      </nav>
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/chat" element={<Chat />} />
-        <Route path="*" element={<p>Page not Found</p>} />{" "}
-      </Routes>
-    </div>
+    <AuthProvider>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route element={<AuthRoute />}>
+            {" "}
+            <Route path="/chat" element={<ChatPage />} />
+            <Route path="/profile" element={<ProfilePage />} />{" "}
+            {/* The key line */}
+          </Route>
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 
