@@ -11,13 +11,13 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const LoginPage = () => {
+  const { handleLogin } = useAuth();
   const navigate = useNavigate();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
-  const { handleLogin } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,7 +39,9 @@ const LoginPage = () => {
       if (response.ok) {
         const data = await response.json();
         handleLogin(data.jwt);
-        navigate("/");
+        const redirectPath = localStorage.getItem("redirectPath") || "/";
+        localStorage.removeItem("redirectPath");
+        navigate(redirectPath);
       } else {
         const errorData = await response.json();
         setError(errorData.message || "Login failed");
