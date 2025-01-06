@@ -4,12 +4,15 @@ import com.aqryuz.backend.authentication.controller.payload.LoginRequest;
 import com.aqryuz.backend.authentication.controller.payload.LoginResponse;
 import com.aqryuz.backend.authentication.controller.payload.RegistrationRequest;
 import com.aqryuz.backend.authentication.controller.payload.UserRegistrationResponse;
+import com.aqryuz.backend.authentication.exception.ApiResponse;
 import com.aqryuz.backend.authentication.exception.DuplicateUsernameException;
+import com.aqryuz.backend.authentication.exception.ErrorCode;
 import com.aqryuz.backend.authentication.mapper.UserMapper;
 import com.aqryuz.backend.authentication.model.User;
 import com.aqryuz.backend.authentication.service.UserService;
 import com.aqryuz.backend.authentication.util.JwtUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
+@Slf4j
 public class AuthController {
   private final UserService userService;
   private final UserMapper userMapper;
@@ -56,19 +60,22 @@ public class AuthController {
 
   @ExceptionHandler(DuplicateUsernameException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public String handleDuplicateUsername(DuplicateUsernameException ex) {
-    return ex.getMessage(); // Return the exception message
+  public ApiResponse<Void> handleDuplicateUsername(DuplicateUsernameException ex) {
+    log.warn(ex.getMessage());
+    return ApiResponse.create(ErrorCode.DUPLICATE_USERNAME);
   }
 
   @ExceptionHandler(BadCredentialsException.class)
   @ResponseStatus(HttpStatus.UNAUTHORIZED)
-  public String handleBadCredentials(BadCredentialsException ex) {
-    return ex.getMessage(); // Return the exception message
+  public ApiResponse<Void> handleBadCredentials(BadCredentialsException ex) {
+    log.warn(ex.getMessage());
+    return ApiResponse.create(ErrorCode.INVALID_CREDENTIALS);
   }
 
   @ExceptionHandler(Exception.class)
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-  public String handleUnknownError(Exception ex) {
-    return ex.getMessage(); // Return the exception message
+  public ApiResponse<Void> handleUnknownError(Exception ex) {
+    log.warn(ex.getMessage());
+    return ApiResponse.create(ErrorCode.INTERNAL_SERVER_ERROR);
   }
 }
