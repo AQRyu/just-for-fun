@@ -4,6 +4,7 @@ import AuthRoute from "./components/AuthRoute";
 import Navbar from "./components/Navbar";
 import { AuthProvider } from "./context/AuthContext";
 import ChatPage from "./pages/ChatPage";
+import CreateGroupPage from "./pages/CreateGroupPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import ProfilePage from "./pages/ProfilePage";
@@ -17,10 +18,9 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route element={<AuthRoute />}>
-            {" "}
             <Route path="/chat" element={<ChatPage />} />
-            <Route path="/profile" element={<ProfilePage />} />{" "}
-            {/* The key line */}
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/groups/create" element={<CreateGroupPage />} />
           </Route>
         </Routes>
       </Router>
