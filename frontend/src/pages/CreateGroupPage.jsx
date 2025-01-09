@@ -68,25 +68,6 @@ function CreateGroupPage() {
       </Box>
     </Container>
   );
-  // return (
-  //   <div>
-  //     <h2>Create New Group</h2>
-  //     <form onSubmit={handleSubmit}>
-  //       <div>
-  //         <label htmlFor="groupName">Group Name:</label>
-  //         <input
-  //           type="text"
-  //           id="groupName"
-  //           value={groupName}
-  //           onChange={(e) => setGroupName(e.target.value)}
-  //           required
-  //         />
-  //       </div>
-  //       {error && <div style={{ color: "red" }}>{error}</div>}
-  //       <button type="submit">Create Group</button>
-  //     </form>
-  //   </div>
-  // );
 }
 
 export default CreateGroupPage;
