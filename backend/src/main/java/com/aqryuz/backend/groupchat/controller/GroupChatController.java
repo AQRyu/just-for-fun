@@ -5,15 +5,19 @@ import com.aqryuz.backend.groupchat.controller.payload.GroupChatCreationRequest;
 import com.aqryuz.backend.groupchat.exception.ApiResponse;
 import com.aqryuz.backend.groupchat.exception.ErrorCode;
 import com.aqryuz.backend.groupchat.exception.InvalidGroupCreationException;
+import com.aqryuz.backend.groupchat.exception.ResourceNotFoundException;
 import com.aqryuz.backend.groupchat.model.Group;
 import com.aqryuz.backend.groupchat.service.GroupCreationService;
+import com.aqryuz.backend.groupchat.service.GroupJoiningService;
 import jakarta.validation.Valid;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class GroupChatController {
 
   private final GroupCreationService groupCreationService;
+  private final GroupJoiningService groupJoiningService;
 
   @PostMapping("/groups")
   @ResponseStatus(HttpStatus.CREATED)
@@ -37,10 +42,27 @@ public class GroupChatController {
     return groupCreationService.createGroup(request, user.getId());
   }
 
+  @PostMapping("/groups/{groupId}/members")
+  @ResponseStatus(HttpStatus.OK)
+  public Group addMembersToGroup(
+      @PathVariable Long groupId,
+      @RequestBody Set<Long> memberIds,
+      @AuthenticationPrincipal UserDetails userDetails) {
+    User currentUser = (User) userDetails;
+    return groupJoiningService.addMembersToGroup(groupId, memberIds, currentUser);
+  }
+
   @ExceptionHandler(InvalidGroupCreationException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public ApiResponse<Void> handleInvalidGroupCreation(InvalidGroupCreationException ex) {
     log.error(ex.getMessage());
     return ApiResponse.create(ErrorCode.INVALID_GROUP_CREATION);
+  }
+
+  @ExceptionHandler(ResourceNotFoundException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ApiResponse<Void> handleResourceNotFound(ResourceNotFoundException ex) {
+    log.error(ex.getMessage());
+    return ApiResponse.create(ErrorCode.RESOURCE_NOT_FOUND);
   }
 }
