@@ -1,19 +1,16 @@
 package com.aqryuz.backend.groupchat.service;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import org.springframework.stereotype.Service;
-
 import com.aqryuz.backend.authentication.model.User;
 import com.aqryuz.backend.authentication.repository.UserRepository;
 import com.aqryuz.backend.groupchat.exception.GroupMasterRequiredException;
 import com.aqryuz.backend.groupchat.exception.ResourceNotFoundException;
 import com.aqryuz.backend.groupchat.model.Group;
 import com.aqryuz.backend.groupchat.repository.GroupRepository;
-
 import jakarta.transaction.Transactional;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
