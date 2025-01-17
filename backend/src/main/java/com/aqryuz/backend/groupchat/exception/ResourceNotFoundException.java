@@ -1,7 +1,13 @@
 package com.aqryuz.backend.groupchat.exception;
 
-public class ResourceNotFoundException extends RuntimeException {
-  public ResourceNotFoundException(String message) {
-    super(message);
+import com.aqryuz.backend.backendexceptions.ApiException;
+import org.springframework.http.HttpStatus;
+
+public class ResourceNotFoundException extends ApiException {
+  public ResourceNotFoundException() {
+    super(
+        ErrorCode.RESOURCE_NOT_FOUND.name(),
+        ErrorCode.RESOURCE_NOT_FOUND.getMessage(),
+        HttpStatus.NOT_FOUND);
   }
 }

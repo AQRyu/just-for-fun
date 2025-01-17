@@ -21,21 +21,15 @@ public class GroupJoiningServiceImpl implements GroupJoiningService {
 
   @Override
   public Group addMembersToGroup(Long groupId, Set<Long> memberIds, User currentUser) {
-    Group group =
-        groupRepository
-            .findById(groupId)
-            .orElseThrow(() -> new ResourceNotFoundException("Group not found ID: " + groupId));
+    Group group = groupRepository.findById(groupId).orElseThrow(ResourceNotFoundException::new);
 
     if (!group.getMaster().equals(currentUser)) {
-      throw new GroupMasterRequiredException("Only the group master can add members");
+      throw new GroupMasterRequiredException();
     }
 
     Set<User> newMembers = new HashSet<>();
     for (Long memberId : memberIds) {
-      User member =
-          userRepository
-              .findById(memberId)
-              .orElseThrow(() -> new ResourceNotFoundException("Invalid member ID: " + memberId));
+      User member = userRepository.findById(memberId).orElseThrow(ResourceNotFoundException::new);
       newMembers.add(member);
     }
 
