@@ -9,7 +9,15 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface GroupChatMapper {
-  @Mapping(target = "name", source = "request.groupName")
   @Mapping(target = "id", ignore = true)
+  @Mapping(target = "name", source = "request.groupName")
+  @Mapping(target = "members", source = "members")
+  @Mapping(target = "master", ignore = true)
   Group toGroup(GroupChatCreationRequest request, Set<User> members);
+
+  @Mapping(target = "id", ignore = true)
+  @Mapping(target = "name", source = "request.groupName")
+  @Mapping(target = "members", ignore = true)
+  @Mapping(target = "master", source = "master")
+  Group toGroup(GroupChatCreationRequest request, User master);
 }
