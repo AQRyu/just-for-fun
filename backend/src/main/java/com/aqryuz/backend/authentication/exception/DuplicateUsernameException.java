@@ -1,8 +1,12 @@
 package com.aqryuz.backend.authentication.exception;
 
-public class DuplicateUsernameException extends RuntimeException {
+import org.springframework.http.HttpStatus;
 
-  public DuplicateUsernameException(String username) {
-    super("Username '" + username + "' already exists.");
+import com.aqryuz.backend.backendexceptions.ApiException;
+
+public class DuplicateUsernameException extends ApiException {
+
+  public DuplicateUsernameException() {
+    super(ErrorCode.DUPLICATE_USERNAME, HttpStatus.CONFLICT);
   }
 }

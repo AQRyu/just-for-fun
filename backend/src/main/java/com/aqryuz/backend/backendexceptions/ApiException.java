@@ -1,39 +1,34 @@
 package com.aqryuz.backend.backendexceptions;
 
-import java.time.ZonedDateTime;
+import org.springframework.http.HttpStatusCode;
 
+import com.aqryuz.backend.authentication.exception.ErrorCode;
+
+import lombok.Getter;
+
+@Getter
 public class ApiException extends RuntimeException {
   private final String errorCode;
   private final String message;
-  private final int httpStatus;
-  private final ZonedDateTime timestamp;
+  private final HttpStatusCode httpStatusCode;
 
-  public ApiException(String errorCode, String message, int httpStatus) {
+  public ApiException(String errorCode, String message, HttpStatusCode httpStatusCode) {
     super(message);
     this.errorCode = errorCode;
     this.message = message;
-    this.httpStatus = httpStatus;
-    this.timestamp = ZonedDateTime.now();
+    this.httpStatusCode = httpStatusCode;
   }
 
-  public String getErrorCode() {
-    return errorCode;
-  }
-
-  @Override
-  public String getMessage() {
-    return message;
-  }
-
-  public int getHttpStatus() {
-    return httpStatus;
-  }
-
-  public ZonedDateTime getTimestamp() {
-    return timestamp;
+  public ApiException(ErrorCode errorCode, HttpStatusCode httpStatusCode){
+    this(errorCode.name(), errorCode.getMessage(), httpStatusCode);
   }
 
   public ApiException(String errorCode, String message) {
-    this(errorCode, message, 500);
+    this(errorCode, message, HttpStatusCode.valueOf(500));
   }
+
+  public ApiException(ErrorCode errorCode){
+    this(errorCode.name(), errorCode.getMessage());
+  }
+
 }
