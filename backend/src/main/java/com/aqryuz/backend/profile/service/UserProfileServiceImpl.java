@@ -1,7 +1,5 @@
 package com.aqryuz.backend.profile.service;
 
-import org.springframework.stereotype.Service;
-
 import com.aqryuz.backend.authentication.model.User;
 import com.aqryuz.backend.authentication.service.UserService;
 import com.aqryuz.backend.groupchat.exception.ResourceNotFoundException;
@@ -11,9 +9,9 @@ import com.aqryuz.backend.profile.model.UpdateUserProfileRecord;
 import com.aqryuz.backend.profile.model.UserProfile;
 import com.aqryuz.backend.profile.model.UserProfileRecord;
 import com.aqryuz.backend.profile.repository.UserProfileRepository;
-
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor

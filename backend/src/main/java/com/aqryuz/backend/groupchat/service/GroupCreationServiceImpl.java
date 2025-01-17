@@ -1,10 +1,5 @@
 package com.aqryuz.backend.groupchat.service;
 
-import java.util.Set;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.aqryuz.backend.authentication.model.User;
 import com.aqryuz.backend.authentication.repository.UserRepository;
 import com.aqryuz.backend.groupchat.controller.payload.GroupChatCreationRequest;
@@ -13,8 +8,10 @@ import com.aqryuz.backend.groupchat.exception.InvalidGroupCreationException;
 import com.aqryuz.backend.groupchat.mapper.GroupChatMapper;
 import com.aqryuz.backend.groupchat.model.Group;
 import com.aqryuz.backend.groupchat.repository.GroupRepository;
-
+import java.util.Set;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
