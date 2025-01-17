@@ -1,8 +1,7 @@
 package com.aqryuz.backend.authentication.exception;
 
-import org.springframework.http.HttpStatus;
-
 import com.aqryuz.backend.backendexceptions.ApiException;
+import org.springframework.http.HttpStatus;
 
 public class DuplicateUsernameException extends ApiException {
 

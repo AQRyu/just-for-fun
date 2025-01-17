@@ -1,23 +1,20 @@
 package com.aqryuz.backend.backendexceptions.config;
 
+import com.aqryuz.backend.authentication.exception.DuplicateUsernameException;
+import com.aqryuz.backend.backendexceptions.ApiException;
+import com.aqryuz.backend.backendexceptions.dto.ApiErrorResponse;
+import com.aqryuz.backend.backendexceptions.dto.FieldError;
+import com.aqryuz.backend.backendexceptions.service.MessageService;
 import java.util.List;
 import java.util.Locale;
-
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
-
-import com.aqryuz.backend.authentication.exception.DuplicateUsernameException;
-import com.aqryuz.backend.backendexceptions.ApiException;
-import com.aqryuz.backend.backendexceptions.dto.ApiErrorResponse;
-import com.aqryuz.backend.backendexceptions.dto.FieldError;
-import com.aqryuz.backend.backendexceptions.service.MessageService;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @RestControllerAdvice
 @RequiredArgsConstructor
@@ -50,7 +47,8 @@ public class GlobalExceptionHandler {
   }
 
   @ExceptionHandler(ApiException.class)
-  public ResponseEntity<ApiErrorResponse> handleDuplicateUsername(DuplicateUsernameException ex, Locale locale) {
+  public ResponseEntity<ApiErrorResponse> handleDuplicateUsername(
+      DuplicateUsernameException ex, Locale locale) {
     String code = ex.getErrorCode();
     String message = messageService.getMessage(ex.getMessage(), locale);
     log.warn(message);

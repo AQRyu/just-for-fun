@@ -1,7 +1,6 @@
 package com.aqryuz.backend.backendexceptions.dto;
 
 import java.util.List;
-
 import lombok.Data;
 
 @Data

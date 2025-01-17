@@ -1,10 +1,8 @@
 package com.aqryuz.backend.backendexceptions;
 
-import org.springframework.http.HttpStatusCode;
-
 import com.aqryuz.backend.authentication.exception.ErrorCode;
-
 import lombok.Getter;
+import org.springframework.http.HttpStatusCode;
 
 @Getter
 public class ApiException extends RuntimeException {
@@ -19,7 +17,7 @@ public class ApiException extends RuntimeException {
     this.httpStatusCode = httpStatusCode;
   }
 
-  public ApiException(ErrorCode errorCode, HttpStatusCode httpStatusCode){
+  public ApiException(ErrorCode errorCode, HttpStatusCode httpStatusCode) {
     this(errorCode.name(), errorCode.getMessage(), httpStatusCode);
   }
 
@@ -27,8 +25,7 @@ public class ApiException extends RuntimeException {
     this(errorCode, message, HttpStatusCode.valueOf(500));
   }
 
-  public ApiException(ErrorCode errorCode){
+  public ApiException(ErrorCode errorCode) {
     this(errorCode.name(), errorCode.getMessage());
   }
-
 }
