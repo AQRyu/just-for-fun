@@ -1,6 +1,5 @@
 package com.aqryuz.backend.backendexceptions.config;
 
-import com.aqryuz.backend.authentication.exception.DuplicateUsernameException;
 import com.aqryuz.backend.backendexceptions.ApiException;
 import com.aqryuz.backend.backendexceptions.dto.ApiErrorResponse;
 import com.aqryuz.backend.backendexceptions.dto.FieldError;
@@ -47,8 +46,7 @@ public class GlobalExceptionHandler {
   }
 
   @ExceptionHandler(ApiException.class)
-  public ResponseEntity<ApiErrorResponse> handleDuplicateUsername(
-      DuplicateUsernameException ex, Locale locale) {
+  public ResponseEntity<ApiErrorResponse> handleDuplicateUsername(ApiException ex, Locale locale) {
     String code = ex.getErrorCode();
     String message = messageService.getMessage(ex.getMessage(), locale);
     log.warn(message);
