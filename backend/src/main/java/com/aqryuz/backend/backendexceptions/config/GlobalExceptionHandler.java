@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
                             error.getDefaultMessage(), locale, error.getArguments())))
             .toList();
 
-    String message = messageService.getMessage("validation.error", locale);
+    String message = messageService.getMessage(ErrorCode.VALIDATION_ERROR.getMessage(), locale);
 
     ApiErrorResponse errorResponse =
         new ApiErrorResponse(HttpStatus.BAD_REQUEST.name(), message, fieldErrors);
@@ -56,7 +56,7 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(Exception.class)
   public ResponseEntity<ApiErrorResponse> handleGenericException(Exception ex, Locale locale) {
-    String message = messageService.getMessage("generic.error", locale);
+    String message = messageService.getMessage(ErrorCode.GENERIC_ERROR.getMessage(), locale);
 
     ApiErrorResponse errorResponse =
         new ApiErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.name(), message);
