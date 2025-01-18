@@ -2,6 +2,7 @@ package com.aqryuz.backend.groupchat.service;
 
 import com.aqryuz.backend.authentication.model.User;
 import com.aqryuz.backend.authentication.repository.UserRepository;
+import com.aqryuz.backend.backendexceptions.ApiException;
 import com.aqryuz.backend.groupchat.exception.GroupNotFoundException;
 import com.aqryuz.backend.groupchat.exception.UnauthorizedException;
 import com.aqryuz.backend.groupchat.exception.UserNotFoundException;
@@ -21,7 +22,9 @@ public class GroupMemberManagementServiceImpl implements GroupMemberManagementSe
   private final UserRepository userRepository;
 
   @Transactional
-  public Group addMembersToGroup(Long groupId, Set<Long> memberIds, User currentUser) {
+  @Override
+  public Group addMembersToGroup(Long groupId, Set<Long> memberIds, User currentUser)
+      throws ApiException {
     Group group = groupRepository.findById(groupId).orElseThrow(GroupNotFoundException::new);
 
     if (!group.getMaster().equals(currentUser)) {
@@ -39,6 +42,7 @@ public class GroupMemberManagementServiceImpl implements GroupMemberManagementSe
   }
 
   @Transactional
+  @Override
   public Group removeMembersFromGroup(Long groupId, Set<Long> memberIds, User currentUser) {
     Group group = groupRepository.findById(groupId).orElseThrow(GroupNotFoundException::new);
 
