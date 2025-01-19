@@ -4,16 +4,16 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(
-    !!localStorage.getItem("user")
+    !!localStorage.getItem("token")
   );
 
   const handleLogin = (token) => {
-    localStorage.setItem("user", token);
+    localStorage.setItem("token", token);
     setIsAuthenticated(true);
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
+    localStorage.removeItem("token");
     setIsAuthenticated(false);
   };
 

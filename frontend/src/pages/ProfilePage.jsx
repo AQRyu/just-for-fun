@@ -32,7 +32,7 @@ function ProfilePage() {
         if (error.response) {
           if (error.response.status === 401) {
             console.error("Unauthorized. Token may be expired.");
-            localStorage.removeItem("user");
+            localStorage.removeItem("token");
             setRedirectToLogin(true);
             return;
           }
@@ -65,7 +65,7 @@ function ProfilePage() {
       if (error.response) {
         if (error.response.status === 401) {
           console.error("Unauthorized. Token may be expired.");
-          localStorage.removeItem("user");
+          localStorage.removeItem("token");
           setRedirectToLogin(true);
           return;
         }
