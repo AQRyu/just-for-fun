@@ -6,6 +6,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 
@@ -29,30 +30,35 @@ function ProfilePage() {
         }
 
         const url = `${process.env.REACT_APP_BACKEND_URL}/me`;
-        const response = await fetch(url, {
-          method: "GET",
+        const response = await axios.get(url, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
-        if (!response.ok) {
-          if (response.status === 401) {
-            console.error("Unauthorized. Token may be expired.");
-            localStorage.removeItem("user");
-            setRedirectToLogin(true);
-            return;
-          }
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
 
-        const data = await response.json();
+        const data = response.data;
         setProfile(data);
         setNickName(data.nickName || "");
         setEmail(data.email || "");
         setBio(data.bio || "");
         setProfilePictureURL(data.profilePictureURL || "");
       } catch (error) {
-        console.error("Error fetching profile:", error);
+        if (error.response) {
+          if (error.response.status === 401) {
+            console.error("Unauthorized. Token may be expired.");
+            localStorage.removeItem("user");
+            setRedirectToLogin(true);
+            return;
+          }
+          console.error(
+            "Error fetching profile (server responded):",
+            error.response.data
+          );
+        } else if (error.request) {
+          console.error("Error fetching profile (no response):", error.request);
+        } else {
+          console.error("Error fetching profile (setup):", error.message);
+        }
       }
     };
 
@@ -69,34 +75,39 @@ function ProfilePage() {
       }
 
       const url = `${process.env.REACT_APP_BACKEND_URL}/me`;
-      const response = await fetch(url, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
+      const response = await axios.put(
+        url,
+        {
           nickName,
           email,
           bio,
           profilePictureURL,
-        }),
-      });
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-      if (!response.ok) {
-        if (response.status === 401) {
+      setProfile(response.data);
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 401) {
           console.error("Unauthorized. Token may be expired.");
           localStorage.removeItem("user");
           setRedirectToLogin(true);
           return;
         }
-        throw new Error(`HTTP error! status: ${response.status}`);
+        console.error(
+          "Error updating profile (server responded):",
+          error.response.data
+        );
+      } else if (error.request) {
+        console.error("Error updating profile (no response):", error.request);
+      } else {
+        console.error("Error updating profile (setup):", error.message);
       }
-
-      const updatedProfile = await response.json();
-      setProfile(updatedProfile);
-    } catch (error) {
-      console.error("Error updating profile:", error);
     }
   };
 

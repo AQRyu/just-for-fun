@@ -71,7 +71,6 @@ const WorkspaceManagementPage = () => {
         }
       );
       setMembers(response.data);
-      debugger;
       setNewMemberId("");
     } catch (err) {
       setError(

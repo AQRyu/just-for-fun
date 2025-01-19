@@ -1,4 +1,5 @@
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import axios from "axios";
 import React, { useState } from "react";
 
 function CreateWorkspacePage() {
@@ -11,28 +12,31 @@ function CreateWorkspacePage() {
     try {
       const token = localStorage.getItem("user");
 
-      const response = await fetch(
+      const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/workspaces`,
+        { name: workspaceName },
         {
-          method: "POST",
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ name: workspaceName }),
         }
       );
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Workspace created:", data);
-      } else {
-        const errorData = await response.json();
-        setError(errorData.message || "Failed to create workspace");
-      }
+      console.log("Workspace created:", response.data);
     } catch (error) {
-      console.error("Error creating workspace:", error);
-      setError("An error occurred. Please try again later.");
+      if (error.response) {
+        setError(error.response.data.message || "Failed to create workspace");
+        console.error(
+          "Error creating workspace (server responded):",
+          error.response.data
+        );
+      } else if (error.request) {
+        setError("An error occurred. Please try again later.");
+        console.error("Error creating workspace (no response):", error.request);
+      } else {
+        setError("An error occurred. Please try again later.");
+        console.error("Error creating workspace (setup):", error.message);
+      }
     }
   };
 

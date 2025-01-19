@@ -6,6 +6,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -25,30 +26,26 @@ const LoginPage = () => {
     setError("");
 
     try {
-      const response = await fetch(
+      const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/auth/login`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ username, password }),
-        }
+        { username, password }
       );
 
-      if (response.ok) {
-        const data = await response.json();
-        handleLogin(data.jwt);
-        const redirectPath = localStorage.getItem("redirectPath") || "/";
-        localStorage.removeItem("redirectPath");
-        navigate(redirectPath);
-      } else {
-        const errorData = await response.json();
-        setError(errorData.message || "Login failed");
-      }
+      handleLogin(response.data.jwt);
+      const redirectPath = localStorage.getItem("redirectPath") || "/";
+      localStorage.removeItem("redirectPath");
+      navigate(redirectPath);
     } catch (error) {
-      console.error("Error during login:", error);
-      setError("An error occurred. Please try again later.");
+      if (error.response) {
+        setError(error.response.data.message || "Login failed");
+        console.error("Login error (server responded):", error.response.data);
+      } else if (error.request) {
+        setError("An error occurred. Please try again later.");
+        console.error("Login error (no response):", error.request);
+      } else {
+        setError("An error occurred. Please try again later.");
+        console.error("Login error (setup):", error.message);
+      }
     } finally {
       setLoading(false);
     }
@@ -57,10 +54,7 @@ const LoginPage = () => {
   return (
     <Container maxWidth="sm" sx={{ mt: "20vh", textAlign: "center" }}>
       <Typography variant="h4" gutterBottom>
-        Welcome to ChatApp
-      </Typography>
-      <Typography variant="body1" gutterBottom>
-        A simple chat application to interact with AI agents
+        Login
       </Typography>
       {error && <Alert severity="error">{error}</Alert>}
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
