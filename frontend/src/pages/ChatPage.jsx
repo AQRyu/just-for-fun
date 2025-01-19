@@ -83,47 +83,59 @@ function ChatPage() {
   };
 
   return (
-    <Grid2 container height="90vh">
+    <Grid2 container sx={{ flex: 1, overflow: "hidden" }}>
       {/* Sidebar */}
-      <Grid2 item size={3} component={Paper} elevation={3}>
+      <Grid2
+        item
+        size={3}
+        component={Paper}
+        elevation={3}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          overflowY: "auto",
+        }}
+      >
         <Typography variant="h6" textAlign="center" mt={2}>
           Workspaces
         </Typography>
-        <div
-          style={{
-            height: "70vh",
+        <ChatList
+          className="workspace-list"
+          dataSource={workspaces.map((workspace) => ({
+            avatar: "https://via.placeholder.com/50",
+            alt: workspace.name,
+            title: workspace.name,
+            subtitle: workspace.description || "No description available",
+            date: new Date(),
+            unread: 0,
+            id: workspace.id,
+          }))}
+          onClick={(item) => {
+            const selectedWorkspace = workspaces.find((w) => w.id === item.id);
+            setCurrentWorkspace(selectedWorkspace);
+            setMessages([]);
           }}
-        >
-          <ChatList
-            className="workspace-list"
-            dataSource={workspaces.map((workspace) => ({
-              avatar: "https://via.placeholder.com/50",
-              alt: workspace.name,
-              title: workspace.name,
-              subtitle: workspace.description || "No description available",
-              date: new Date(),
-              unread: 0,
-              id: workspace.id,
-            }))}
-            onClick={(item) => {
-              const selectedWorkspace = workspaces.find(
-                (w) => w.id === item.id
-              );
-              setCurrentWorkspace(selectedWorkspace);
-              setMessages([]);
-            }}
-          />
-        </div>
+        />
       </Grid2>
+
       {/* Chat Area */}
-      <Grid2 size={9}>
+      <Grid2
+        size={9}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          height: "100%",
+          backgroundColor: "#f5f5f5",
+        }}
+      >
+        {/* Header */}
         <Typography variant="h6" textAlign="center" mt={2}>
           {currentWorkspace?.name || "Select a Workspace"}
         </Typography>
 
         <div
           style={{
-            height: "80%",
+            flex: 1,
             padding: "10px",
             overflowY: "auto",
             backgroundColor: "#f5f5f5",
@@ -139,11 +151,16 @@ function ChatPage() {
         </div>
 
         {/* Input Field */}
-        <div style={{ display: "flex", alignItems: "center", padding: "10px" }}>
+        <div
+          style={{
+            padding: "10px",
+            backgroundColor: "#ffffff",
+            display: "flex",
+          }}
+        >
           <TextField
             fullWidth
             placeholder="Type a message..."
-            sx={{ flexGrow: 1, marginRight: "10px" }}
             variant="outlined"
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
