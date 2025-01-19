@@ -1,4 +1,14 @@
-import { Button, List, ListItem, TextField } from "@mui/material";
+import {
+  Alert,
+  Button,
+  CircularProgress,
+  Container,
+  Grid2,
+  List,
+  ListItem,
+  TextField,
+  Typography,
+} from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -11,6 +21,7 @@ const GroupManagementPage = () => {
   const [members, setMembers] = useState([]);
   const [newMemberId, setNewMemberId] = useState("");
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -19,6 +30,7 @@ const GroupManagementPage = () => {
     }
 
     const fetchMembers = async () => {
+      setLoading(true);
       try {
         const token = localStorage.getItem("user");
         const response = await axios.get(
@@ -38,6 +50,8 @@ const GroupManagementPage = () => {
         if (err.response && err.response.status === 401) {
           handleLogout();
         }
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -87,35 +101,61 @@ const GroupManagementPage = () => {
   };
 
   return (
-    <div>
-      <h1>Manage Group {groupId}</h1>
+    <Container maxWidth="sm" sx={{ mt: "10vh" }}>
+      <typography>Manage Group {groupId}</typography>
 
-      {error && <div style={{ color: "red" }}>{error}</div>}
-
-      <h2>Members</h2>
-      {members && members.length > 0 ? (
-        <List>
-          {members.map((member) => (
-            <ListItem key={member.id}>
-              {member.username}
-              <Button onClick={() => handleRemoveMember(member.id)}>
-                Remove
-              </Button>
-            </ListItem>
-          ))}
-        </List>
-      ) : (
-        <p>Loading members... Or No members found.</p>
+      {loading && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginTop: "1rem",
+          }}
+        >
+          <CircularProgress />
+        </div>
       )}
 
-      <h2>Add Member</h2>
-      <TextField
-        label="Member ID"
-        value={newMemberId}
-        onChange={(e) => setNewMemberId(e.target.value)}
-      />
-      <Button onClick={handleAddMember}>Add Member</Button>
-    </div>
+      {error && (
+        <Alert severity="error" sx={{ mt: 2 }}>
+          {error}
+        </Alert>
+      )}
+
+      <Grid2 container spacing={2} sx={{ mt: 2 }}>
+        <Grid2 item xs={12} md={6}>
+          {members && members.length > 0 ? (
+            <List>
+              {members.map((member) => (
+                <ListItem key={member.id}>
+                  {member.username}
+                  <Button onClick={() => handleRemoveMember(member.id)}>
+                    Remove
+                  </Button>
+                </ListItem>
+              ))}
+            </List>
+          ) : !loading ? (
+            <Typography variant="body1">No members found.</Typography>
+          ) : null}
+        </Grid2>
+      </Grid2>
+
+      <Grid2 item xs={12} md={8}>
+        <TextField
+          label="Member ID"
+          variant="outlined"
+          fullWidth
+          value={newMemberId}
+          onChange={(e) => setNewMemberId(e.target.value)}
+        />
+      </Grid2>
+      <Grid2 item xs={12} md={4}>
+        <Button onClick={handleAddMember} variant="contained" fullWidth>
+          Add Member
+        </Button>
+      </Grid2>
+    </Container>
   );
 };
 
