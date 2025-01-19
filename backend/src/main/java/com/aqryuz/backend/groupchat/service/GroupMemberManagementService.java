@@ -1,12 +1,13 @@
 package com.aqryuz.backend.groupchat.service;
 
 import com.aqryuz.backend.authentication.model.User;
-import com.aqryuz.backend.backendexceptions.ApiException;
-import com.aqryuz.backend.groupchat.model.Group;
+import java.util.List;
 import java.util.Set;
 
 public interface GroupMemberManagementService {
-  Group addMembersToGroup(Long groupId, Set<Long> memberIds, User currentUser) throws ApiException;
+  List<User> getMembersOfGroup(Long groupId, User user);
 
-  Group removeMembersFromGroup(Long groupId, Set<Long> memberIds, User currentUser);
+  List<User> addMembersToGroup(Long groupId, Set<Long> memberIds, User currentUser);
+
+  List<User> removeMembersFromGroup(Long groupId, Set<Long> memberIds, User currentUser);
 }

@@ -1,9 +1,9 @@
 package com.aqryuz.backend.groupchat.controller;
 
 import com.aqryuz.backend.authentication.model.User;
-import com.aqryuz.backend.groupchat.model.Group;
 import com.aqryuz.backend.groupchat.service.GroupMemberManagementService;
 import jakarta.validation.Valid;
+import java.util.List;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,9 +27,17 @@ public class GroupMemberManagementController {
 
   private final GroupMemberManagementService groupMemberManagementService;
 
+  @GetMapping
+  @ResponseStatus(HttpStatus.OK)
+  public List<User> getMembersOfGroup(
+      @PathVariable Long groupId, @AuthenticationPrincipal UserDetails userDetails) {
+    User user = (User) userDetails;
+    return groupMemberManagementService.getMembersOfGroup(groupId, user);
+  }
+
   @PostMapping
   @ResponseStatus(HttpStatus.OK)
-  public Group addMembersToGroup(
+  public List<User> addMembersToGroup(
       @PathVariable Long groupId,
       @RequestBody @Valid Set<Long> memberIds,
       @AuthenticationPrincipal UserDetails userDetails) {
@@ -38,7 +47,7 @@ public class GroupMemberManagementController {
 
   @DeleteMapping
   @ResponseStatus(HttpStatus.OK)
-  public Group removeMembersFromGroup(
+  public List<User> removeMembersFromGroup(
       @PathVariable Long groupId,
       @RequestBody @Valid Set<Long> memberIds,
       @AuthenticationPrincipal UserDetails userDetails) {

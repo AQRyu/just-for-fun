@@ -9,6 +9,7 @@ import com.aqryuz.backend.groupchat.exception.UserNotFoundException;
 import com.aqryuz.backend.groupchat.model.Group;
 import com.aqryuz.backend.groupchat.repository.GroupRepository;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,9 +22,19 @@ public class GroupMemberManagementServiceImpl implements GroupMemberManagementSe
   private final GroupRepository groupRepository;
   private final UserRepository userRepository;
 
+  @Override
+  public List<User> getMembersOfGroup(Long groupId, User user) {
+    Group group = groupRepository.findById(groupId).orElseThrow(GroupNotFoundException::new);
+    if (!group.getMaster().equals(user)) {
+      throw new UnauthorizedException();
+    }
+
+    return group.getMembers().stream().toList();
+  }
+
   @Transactional
   @Override
-  public Group addMembersToGroup(Long groupId, Set<Long> memberIds, User currentUser)
+  public List<User> addMembersToGroup(Long groupId, Set<Long> memberIds, User currentUser)
       throws ApiException {
     Group group = groupRepository.findById(groupId).orElseThrow(GroupNotFoundException::new);
 
@@ -38,12 +49,12 @@ public class GroupMemberManagementServiceImpl implements GroupMemberManagementSe
     }
 
     group.getMembers().addAll(membersToAdd);
-    return groupRepository.save(group);
+    return groupRepository.save(group).getMembers().stream().toList();
   }
 
   @Transactional
   @Override
-  public Group removeMembersFromGroup(Long groupId, Set<Long> memberIds, User currentUser) {
+  public List<User> removeMembersFromGroup(Long groupId, Set<Long> memberIds, User currentUser) {
     Group group = groupRepository.findById(groupId).orElseThrow(GroupNotFoundException::new);
 
     if (!group.getMaster().equals(currentUser)) {
@@ -57,6 +68,6 @@ public class GroupMemberManagementServiceImpl implements GroupMemberManagementSe
     }
 
     group.getMembers().removeAll(membersToRemove);
-    return groupRepository.save(group);
+    return groupRepository.save(group).getMembers().stream().toList();
   }
 }

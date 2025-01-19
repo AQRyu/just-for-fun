@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import { AuthProvider } from "./context/AuthContext";
 import ChatPage from "./pages/ChatPage";
 import CreateGroupPage from "./pages/CreateGroupPage";
+import GroupManagementPage from "./pages/GroupManagementPage"; // Import the new page
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import ProfilePage from "./pages/ProfilePage";
@@ -21,6 +22,10 @@ function App() {
             <Route path="/chat" element={<ChatPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/groups/create" element={<CreateGroupPage />} />
+            <Route
+              path="/groups/:groupId/manage"
+              element={<GroupManagementPage />}
+            />
           </Route>
         </Routes>
       </Router>
