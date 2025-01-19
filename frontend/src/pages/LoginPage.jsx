@@ -56,16 +56,14 @@ const LoginPage = () => {
 
   return (
     <Container maxWidth="sm" sx={{ mt: "20vh", textAlign: "center" }}>
-      {" "}
-      {/* Use MUI Container for centering */}
       <Typography variant="h4" gutterBottom>
-        Login
+        Welcome to ChatApp
       </Typography>
-      {error && <Alert severity="error">{error}</Alert>}{" "}
-      {/* Use MUI Alert for errors */}
+      <Typography variant="body1" gutterBottom>
+        A simple chat application to interact with AI agents
+      </Typography>
+      {error && <Alert severity="error">{error}</Alert>}
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-        {" "}
-        {/* Use MUI Box and form */}
         <TextField
           margin="normal"
           required
@@ -97,7 +95,7 @@ const LoginPage = () => {
           sx={{ mt: 3, mb: 2 }}
           disabled={loading}
         >
-          {loading ? "Logging in..." : "Login"} {/* Show loading indicator */}
+          {loading ? "Logging in..." : "Login"}
         </Button>
       </Box>
     </Container>
