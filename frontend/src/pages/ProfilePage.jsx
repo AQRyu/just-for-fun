@@ -22,13 +22,6 @@ function ProfilePage() {
     const fetchProfile = async () => {
       try {
         const token = localStorage.getItem("user");
-
-        if (!token) {
-          console.error("No token found. Please log in.");
-          setRedirectToLogin(true);
-          return;
-        }
-
         const url = `${process.env.REACT_APP_BACKEND_URL}/me`;
         const response = await axios.get(url, {
           headers: {
@@ -68,12 +61,6 @@ function ProfilePage() {
   const updateProfile = async () => {
     try {
       const token = localStorage.getItem("user");
-      if (!token) {
-        console.error("No token found for update. Redirecting to login.");
-        setRedirectToLogin(true);
-        return;
-      }
-
       const url = `${process.env.REACT_APP_BACKEND_URL}/me`;
       const response = await axios.put(
         url,
