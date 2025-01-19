@@ -1,6 +1,6 @@
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
-import axios from "axios";
 import React, { useState } from "react";
+import api from "../context/api";
 
 function CreateWorkspacePage() {
   const [workspaceName, setWorkspaceName] = useState("");
@@ -10,17 +10,9 @@ function CreateWorkspacePage() {
     e.preventDefault();
     setError("");
     try {
-      const token = localStorage.getItem("user");
-
-      const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/workspaces`,
-        { name: workspaceName },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await api.post(`/api/workspaces`, {
+        name: workspaceName,
+      });
 
       console.log("Workspace created:", response.data);
     } catch (error) {

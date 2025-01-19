@@ -6,9 +6,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
+import api from "../context/api";
 
 function ProfilePage() {
   const [profile, setProfile] = useState(null);
@@ -21,14 +21,7 @@ function ProfilePage() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const token = localStorage.getItem("user");
-        const url = `${process.env.REACT_APP_BACKEND_URL}/me`;
-        const response = await axios.get(url, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
+        const response = await api.get(`/me`);
         const data = response.data;
         setProfile(data);
         setNickName(data.nickName || "");
@@ -60,22 +53,12 @@ function ProfilePage() {
 
   const updateProfile = async () => {
     try {
-      const token = localStorage.getItem("user");
-      const url = `${process.env.REACT_APP_BACKEND_URL}/me`;
-      const response = await axios.put(
-        url,
-        {
-          nickName,
-          email,
-          bio,
-          profilePictureURL,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await api.put(`/me`, {
+        nickName,
+        email,
+        bio,
+        profilePictureURL,
+      });
 
       setProfile(response.data);
     } catch (error) {

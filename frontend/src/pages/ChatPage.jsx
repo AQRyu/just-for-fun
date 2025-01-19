@@ -1,9 +1,9 @@
 import { Button, Grid2, Paper, TextField, Typography } from "@mui/material";
 import * as StompJs from "@stomp/stompjs";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { ChatList, MessageList } from "react-chat-elements";
 import "react-chat-elements/dist/main.css";
+import api from "../context/api";
 
 const client = new StompJs.Client({
   brokerURL: "ws://localhost:8080/ws",
@@ -21,15 +21,7 @@ function ChatPage() {
 
   useEffect(() => {
     const fetchWorkspaces = async () => {
-      const token = localStorage.getItem("user");
-      const response = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URL}/api/workspaces`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await api.get(`/api/workspaces`);
       setWorkspaces(response.data);
     };
     fetchWorkspaces();

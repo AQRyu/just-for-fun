@@ -6,10 +6,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import api from "../context/api";
 
 const LoginPage = () => {
   const { handleLogin } = useAuth();
@@ -26,10 +26,7 @@ const LoginPage = () => {
     setError("");
 
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/auth/login`,
-        { username, password }
-      );
+      const response = await api.post(`/auth/login`, { username, password });
 
       handleLogin(response.data.jwt);
       const redirectPath = localStorage.getItem("redirectPath") || "/";
