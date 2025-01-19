@@ -47,7 +47,6 @@ function ChatPage() {
   }, []);
 
   const handleSendMessage = () => {
-    // Renamed for clarity
     if (newMessage.trim() !== "") {
       client.publish({
         destination: "/app/sendMessage",
@@ -61,7 +60,6 @@ function ChatPage() {
   };
 
   const handleKeyDown = (e) => {
-    // From your old ChatUI
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
@@ -71,15 +69,12 @@ function ChatPage() {
   return (
     <Container maxWidth="sm" sx={{ mt: 2 }}>
       <div style={{ height: "80vh" }}>
-        {" "}
-        {/* Set a fixed height for the chat */}
         <MessageList
           className="message-list"
           lockable={true}
           toBottomHeight={"100%"}
           dataSource={messages}
         />
-        {/* Input area using MUI components */}
         <Box sx={{ display: "flex", alignItems: "center", padding: "10px" }}>
           <TextField
             label="Type your message"
@@ -87,11 +82,9 @@ function ChatPage() {
             sx={{ flexGrow: 1, marginRight: "10px" }}
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
-            onKeyDown={handleKeyDown} // Handle Enter key
+            onKeyDown={handleKeyDown}
           />
           <IconButton>
-            {" "}
-            {/* Attachment Button */}
             <AttachFileIcon />
           </IconButton>
           <Button
