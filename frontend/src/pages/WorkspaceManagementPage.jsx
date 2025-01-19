@@ -24,11 +24,6 @@ const WorkspaceManagementPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/login");
-      return;
-    }
-
     const fetchMembers = async () => {
       setLoading(true);
       try {
