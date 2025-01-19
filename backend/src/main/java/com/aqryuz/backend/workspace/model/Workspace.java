@@ -20,8 +20,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "groups")
-public class Group {
+@Table(name = "workspaces")
+public class Workspace {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,12 +32,12 @@ public class Group {
 
   @ManyToMany
   @JoinTable(
-      name = "group_members",
-      joinColumns = @JoinColumn(name = "group_id"),
+      name = "workspace_members",
+      joinColumns = @JoinColumn(name = "workspace_id"),
       inverseJoinColumns = @JoinColumn(name = "user_id"))
   private Set<User> members;
 
   @ManyToOne
-  @JoinColumn(name = "master_user_id")
-  private User master;
+  @JoinColumn(name = "admin_id")
+  private User admin;
 }

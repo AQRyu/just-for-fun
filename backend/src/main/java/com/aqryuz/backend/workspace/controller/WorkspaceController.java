@@ -1,12 +1,11 @@
 package com.aqryuz.backend.workspace.controller;
 
 import com.aqryuz.backend.authentication.model.User;
-import com.aqryuz.backend.workspace.controller.payload.GroupChatCreationRequest;
-import com.aqryuz.backend.workspace.model.Group;
-import com.aqryuz.backend.workspace.service.GroupCreationService;
+import com.aqryuz.backend.workspace.controller.payload.WorkspaceCreationRequest;
+import com.aqryuz.backend.workspace.model.Workspace;
+import com.aqryuz.backend.workspace.service.WorkspaceCreationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,19 +16,18 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/groupchat")
+@RequestMapping("/api/workspaces")
 @RequiredArgsConstructor
-@Slf4j
-public class GroupChatController {
+public class WorkspaceController {
 
-  private final GroupCreationService groupCreationService;
+  private final WorkspaceCreationService workspaceCreationService;
 
-  @PostMapping("/groups")
+  @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public Group createGroup(
+  public Workspace create(
       @AuthenticationPrincipal UserDetails userDetails,
-      @RequestBody @Valid GroupChatCreationRequest request) {
+      @RequestBody @Valid WorkspaceCreationRequest request) {
     User user = (User) userDetails;
-    return groupCreationService.createGroup(request, user.getId());
+    return workspaceCreationService.create(request, user.getId());
   }
 }

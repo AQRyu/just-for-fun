@@ -1,11 +1,11 @@
 package com.aqryuz.backend.workspace.exception;
 
 public enum ErrorCode {
-  GROUP_MASTER_REQUIRED("group.master.required"),
-  INVALID_GROUP_CREATION("invalid.group.creation"),
-  GROUP_NOT_FOUND("group.not.found"),
+  WORKSPACE_MASTER_REQUIRED("workspace.master.required"),
+  INVALID_WORKSPACE_CREATION("invalid.workspace.creation"),
+  WORKSPACE_NOT_FOUND("workspace.not.found"),
   USER_NOT_FOUND("user.not.found"),
-  GROUP_UNAUTHORIZED("group.unauthorized"),
+  WORKSPACE_UNAUTHORIZED("workspace.unauthorized"),
   RESOURCE_NOT_FOUND("resource.not.found");
 
   private final String message;

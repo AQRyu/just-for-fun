@@ -20,15 +20,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "group_messages")
-public class GroupMessage {
+@Table(name = "workspace_messages")
+public class WorkspaceMessage {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   @ManyToOne
-  @JoinColumn(name = "group_id")
-  private Group group;
+  @JoinColumn(name = "workspace_id")
+  private Workspace workspace;
 
   @ManyToOne
   @JoinColumn(name = "sender_id")

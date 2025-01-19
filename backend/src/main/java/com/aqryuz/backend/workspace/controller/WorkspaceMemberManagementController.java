@@ -1,7 +1,7 @@
 package com.aqryuz.backend.workspace.controller;
 
 import com.aqryuz.backend.authentication.model.User;
-import com.aqryuz.backend.workspace.service.GroupMemberManagementService;
+import com.aqryuz.backend.workspace.service.WorkspaceMemberManagementService;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Set;
@@ -20,38 +20,38 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/groupchat/groups/{groupId}/members")
+@RequestMapping("/api/workspace/{workspaceId}/members")
 @RequiredArgsConstructor
 @Slf4j
-public class GroupMemberManagementController {
+public class WorkspaceMemberManagementController {
 
-  private final GroupMemberManagementService groupMemberManagementService;
+  private final WorkspaceMemberManagementService workspaceMemberManagementService;
 
   @GetMapping
   @ResponseStatus(HttpStatus.OK)
-  public List<User> getMembersOfGroup(
-      @PathVariable Long groupId, @AuthenticationPrincipal UserDetails userDetails) {
+  public List<User> getMembers(
+      @PathVariable Long workspaceId, @AuthenticationPrincipal UserDetails userDetails) {
     User user = (User) userDetails;
-    return groupMemberManagementService.getMembersOfGroup(groupId, user);
+    return workspaceMemberManagementService.getMembers(workspaceId, user);
   }
 
   @PostMapping
   @ResponseStatus(HttpStatus.OK)
-  public List<User> addMembersToGroup(
-      @PathVariable Long groupId,
+  public List<User> addMembers(
+      @PathVariable Long workspaceId,
       @RequestBody @Valid Set<Long> memberIds,
       @AuthenticationPrincipal UserDetails userDetails) {
     User currentUser = (User) userDetails;
-    return groupMemberManagementService.addMembersToGroup(groupId, memberIds, currentUser);
+    return workspaceMemberManagementService.addMembers(workspaceId, memberIds, currentUser);
   }
 
   @DeleteMapping
   @ResponseStatus(HttpStatus.OK)
-  public List<User> removeMembersFromGroup(
-      @PathVariable Long groupId,
+  public List<User> removeMembers(
+      @PathVariable Long workspaceId,
       @RequestBody @Valid Set<Long> memberIds,
       @AuthenticationPrincipal UserDetails userDetails) {
     User currentUser = (User) userDetails;
-    return groupMemberManagementService.removeMembersFromGroup(groupId, memberIds, currentUser);
+    return workspaceMemberManagementService.removeMembers(workspaceId, memberIds, currentUser);
   }
 }
