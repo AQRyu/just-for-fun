@@ -1,4 +1,4 @@
-package com.aqryuz.backend.groupchat.exception;
+package com.aqryuz.backend.workspace.exception;
 
 import com.aqryuz.backend.backendexceptions.ApiException;
 import org.springframework.http.HttpStatus;

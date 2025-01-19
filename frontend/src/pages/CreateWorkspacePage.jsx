@@ -1,8 +1,8 @@
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 
-function CreateGroupPage() {
-  const [groupName, setGroupName] = useState("");
+function CreateWorkspacePage() {
+  const [workspaceName, setWorkspaceName] = useState("");
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
@@ -12,26 +12,26 @@ function CreateGroupPage() {
       const token = localStorage.getItem("user");
 
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/api/groupchat/groups`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/workspaces`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ groupName }),
+          body: JSON.stringify({ name: workspaceName }),
         }
       );
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Group created:", data);
+        console.log("Workspace created:", data);
       } else {
         const errorData = await response.json();
-        setError(errorData.message || "Failed to create group");
+        setError(errorData.message || "Failed to create workspace");
       }
     } catch (error) {
-      console.error("Error creating group:", error);
+      console.error("Error creating workspace:", error);
       setError("An error occurred. Please try again later.");
     }
   };
@@ -41,7 +41,7 @@ function CreateGroupPage() {
       {" "}
       {/* Centers content and adds top margin */}
       <Typography variant="h4" align="center" gutterBottom>
-        Create New Group
+        Create New Workspace
       </Typography>
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
         {" "}
@@ -50,12 +50,12 @@ function CreateGroupPage() {
           margin="normal"
           required
           fullWidth
-          id="groupName"
-          label="Group Name"
-          name="groupName"
+          id="workspaceName"
+          label="Workspace Name"
+          name="workspaceName"
           autoFocus
-          value={groupName}
-          onChange={(e) => setGroupName(e.target.value)}
+          value={workspaceName}
+          onChange={(e) => setWorkspaceName(e.target.value)}
         />
         <Button
           type="submit"
@@ -63,11 +63,11 @@ function CreateGroupPage() {
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
         >
-          Create Group
+          Create Workspace
         </Button>
       </Box>
     </Container>
   );
 }
 
-export default CreateGroupPage;
+export default CreateWorkspacePage;
