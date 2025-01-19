@@ -1,4 +1,4 @@
-package com.aqryuz.backend.groupchat.exception;
+package com.aqryuz.backend.workspace.exception;
 
 public enum ErrorCode {
   GROUP_MASTER_REQUIRED("group.master.required"),

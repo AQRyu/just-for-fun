@@ -1,7 +1,7 @@
-package com.aqryuz.backend.groupchat.controller;
+package com.aqryuz.backend.workspace.controller;
 
 import com.aqryuz.backend.authentication.model.User;
-import com.aqryuz.backend.groupchat.service.GroupMemberManagementService;
+import com.aqryuz.backend.workspace.service.GroupMemberManagementService;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Set;

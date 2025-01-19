@@ -1,4 +1,4 @@
-package com.aqryuz.backend.groupchat.model;
+package com.aqryuz.backend.workspace.model;
 
 import com.aqryuz.backend.authentication.model.User;
 import jakarta.persistence.Column;

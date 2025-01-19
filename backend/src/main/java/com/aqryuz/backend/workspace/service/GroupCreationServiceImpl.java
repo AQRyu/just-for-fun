@@ -1,13 +1,13 @@
-package com.aqryuz.backend.groupchat.service;
+package com.aqryuz.backend.workspace.service;
 
 import com.aqryuz.backend.authentication.model.User;
 import com.aqryuz.backend.authentication.repository.UserRepository;
-import com.aqryuz.backend.groupchat.controller.payload.GroupChatCreationRequest;
-import com.aqryuz.backend.groupchat.exception.GroupMasterRequiredException;
-import com.aqryuz.backend.groupchat.exception.InvalidGroupCreationException;
-import com.aqryuz.backend.groupchat.mapper.GroupChatMapper;
-import com.aqryuz.backend.groupchat.model.Group;
-import com.aqryuz.backend.groupchat.repository.GroupRepository;
+import com.aqryuz.backend.workspace.controller.payload.GroupChatCreationRequest;
+import com.aqryuz.backend.workspace.exception.GroupMasterRequiredException;
+import com.aqryuz.backend.workspace.exception.InvalidGroupCreationException;
+import com.aqryuz.backend.workspace.mapper.GroupChatMapper;
+import com.aqryuz.backend.workspace.model.Group;
+import com.aqryuz.backend.workspace.repository.GroupRepository;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

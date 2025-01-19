@@ -1,13 +1,13 @@
-package com.aqryuz.backend.groupchat.service;
+package com.aqryuz.backend.workspace.service;
 
 import com.aqryuz.backend.authentication.model.User;
 import com.aqryuz.backend.authentication.repository.UserRepository;
 import com.aqryuz.backend.backendexceptions.ApiException;
-import com.aqryuz.backend.groupchat.exception.GroupNotFoundException;
-import com.aqryuz.backend.groupchat.exception.UnauthorizedException;
-import com.aqryuz.backend.groupchat.exception.UserNotFoundException;
-import com.aqryuz.backend.groupchat.model.Group;
-import com.aqryuz.backend.groupchat.repository.GroupRepository;
+import com.aqryuz.backend.workspace.exception.GroupNotFoundException;
+import com.aqryuz.backend.workspace.exception.UnauthorizedException;
+import com.aqryuz.backend.workspace.exception.UserNotFoundException;
+import com.aqryuz.backend.workspace.model.Group;
+import com.aqryuz.backend.workspace.repository.GroupRepository;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

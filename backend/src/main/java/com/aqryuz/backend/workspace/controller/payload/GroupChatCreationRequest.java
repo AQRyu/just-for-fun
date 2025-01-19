@@ -1,4 +1,4 @@
-package com.aqryuz.backend.groupchat.controller.payload;
+package com.aqryuz.backend.workspace.controller.payload;
 
 import jakarta.validation.constraints.NotBlank;
 

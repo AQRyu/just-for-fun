@@ -1,6 +1,6 @@
-package com.aqryuz.backend.groupchat.repository;
+package com.aqryuz.backend.workspace.repository;
 
-import com.aqryuz.backend.groupchat.model.Group;
+import com.aqryuz.backend.workspace.model.Group;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 

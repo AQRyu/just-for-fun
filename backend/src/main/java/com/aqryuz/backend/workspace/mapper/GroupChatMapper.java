@@ -1,8 +1,8 @@
-package com.aqryuz.backend.groupchat.mapper;
+package com.aqryuz.backend.workspace.mapper;
 
 import com.aqryuz.backend.authentication.model.User;
-import com.aqryuz.backend.groupchat.controller.payload.GroupChatCreationRequest;
-import com.aqryuz.backend.groupchat.model.Group;
+import com.aqryuz.backend.workspace.controller.payload.GroupChatCreationRequest;
+import com.aqryuz.backend.workspace.model.Group;
 import java.util.Set;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

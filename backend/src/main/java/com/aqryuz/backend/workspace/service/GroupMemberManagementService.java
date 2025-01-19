@@ -1,4 +1,4 @@
-package com.aqryuz.backend.groupchat.service;
+package com.aqryuz.backend.workspace.service;
 
 import com.aqryuz.backend.authentication.model.User;
 import java.util.List;

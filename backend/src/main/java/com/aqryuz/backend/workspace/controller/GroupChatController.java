@@ -1,9 +1,9 @@
-package com.aqryuz.backend.groupchat.controller;
+package com.aqryuz.backend.workspace.controller;
 
 import com.aqryuz.backend.authentication.model.User;
-import com.aqryuz.backend.groupchat.controller.payload.GroupChatCreationRequest;
-import com.aqryuz.backend.groupchat.model.Group;
-import com.aqryuz.backend.groupchat.service.GroupCreationService;
+import com.aqryuz.backend.workspace.controller.payload.GroupChatCreationRequest;
+import com.aqryuz.backend.workspace.model.Group;
+import com.aqryuz.backend.workspace.service.GroupCreationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
