@@ -4,8 +4,8 @@ import AuthRoute from "./components/AuthRoute";
 import Navbar from "./components/Navbar";
 import { AuthProvider } from "./context/AuthContext";
 import ChatPage from "./pages/ChatPage";
-import CreateGroupPage from "./pages/CreateGroupPage";
-import GroupManagementPage from "./pages/GroupManagementPage"; // Import the new page
+import CreateWorkspacePage from "./pages/CreateWorkspacePage";
+import WorkspaceManagementPage from "./pages/WorkspaceManagementPage";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import ProfilePage from "./pages/ProfilePage";
@@ -21,10 +21,10 @@ function App() {
           <Route element={<AuthRoute />}>
             <Route path="/chat" element={<ChatPage />} />
             <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/groups/create" element={<CreateGroupPage />} />
+            <Route path="/workspace/create" element={<CreateWorkspacePage />} />
             <Route
-              path="/groups/:groupId/manage"
-              element={<GroupManagementPage />}
+              path="/workspace/:workspaceId/manage"
+              element={<WorkspaceManagementPage />}
             />
           </Route>
         </Routes>

@@ -14,8 +14,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-const GroupManagementPage = () => {
-  const { groupId } = useParams();
+const WorkspaceManagementPage = () => {
+  const { workspaceId } = useParams();
   const navigate = useNavigate();
   const { isAuthenticated, handleLogout } = useAuth();
   const [members, setMembers] = useState([]);
@@ -34,7 +34,7 @@ const GroupManagementPage = () => {
       try {
         const token = localStorage.getItem("user");
         const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/api/groupchat/groups/${groupId}/members`,
+          `${process.env.REACT_APP_BACKEND_URL}/api/workspacechat/workspaces/${workspaceId}/members`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -44,9 +44,9 @@ const GroupManagementPage = () => {
         setMembers(response.data);
       } catch (err) {
         setError(
-          "Error fetching group members. Are you authorized to manage this group?"
+          "Error fetching workspace members. Are you authorized to manage this workspace?"
         );
-        console.error("Error fetching group members:", err);
+        console.error("Error fetching workspace members:", err);
         if (err.response && err.response.status === 401) {
           handleLogout();
         }
@@ -56,13 +56,13 @@ const GroupManagementPage = () => {
     };
 
     fetchMembers();
-  }, [groupId, isAuthenticated, navigate, handleLogout]);
+  }, [workspaceId, isAuthenticated, navigate, handleLogout]);
 
   const handleAddMember = async () => {
     try {
       const token = localStorage.getItem("user");
       const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/groupchat/groups/${groupId}/members`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/workspacechat/workspaces/${workspaceId}/members`,
         [newMemberId],
         {
           headers: {
@@ -85,7 +85,7 @@ const GroupManagementPage = () => {
     try {
       const token = localStorage.getItem("user");
       await axios.delete(
-        `${process.env.REACT_APP_BACKEND_URL}/api/groupchat/groups/${groupId}/members`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/workspacechat/workspaces/${workspaceId}/members`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -102,7 +102,7 @@ const GroupManagementPage = () => {
 
   return (
     <Container maxWidth="sm" sx={{ mt: "10vh" }}>
-      <typography>Manage Group {groupId}</typography>
+      <typography>Manage Workspace {workspaceId}</typography>
 
       {loading && (
         <div
@@ -159,4 +159,4 @@ const GroupManagementPage = () => {
   );
 };
 
-export default GroupManagementPage;
+export default WorkspaceManagementPage;
