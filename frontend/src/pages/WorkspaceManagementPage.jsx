@@ -34,7 +34,7 @@ const WorkspaceManagementPage = () => {
       try {
         const token = localStorage.getItem("user");
         const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/api/workspacechat/workspaces/${workspaceId}/members`,
+          `${process.env.REACT_APP_BACKEND_URL}/api/workspaces/${workspaceId}/members`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -62,7 +62,7 @@ const WorkspaceManagementPage = () => {
     try {
       const token = localStorage.getItem("user");
       const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/workspacechat/workspaces/${workspaceId}/members`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/workspaces/${workspaceId}/members`,
         [newMemberId],
         {
           headers: {
@@ -85,7 +85,7 @@ const WorkspaceManagementPage = () => {
     try {
       const token = localStorage.getItem("user");
       await axios.delete(
-        `${process.env.REACT_APP_BACKEND_URL}/api/workspacechat/workspaces/${workspaceId}/members`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/workspaces/${workspaceId}/members`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

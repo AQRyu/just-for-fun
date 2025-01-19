@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/workspace/{workspaceId}/members")
+@RequestMapping("/api/workspaces/{workspaceId}/members")
 @RequiredArgsConstructor
 @Slf4j
 public class WorkspaceMemberManagementController {
