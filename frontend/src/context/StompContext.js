@@ -1,10 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { Client } from "@stomp/stompjs";
+import { useAuth } from "./AuthContext";
 
 const StompContext = createContext();
 
 export const StompProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { isAuthenticated } = useAuth();
   const [stompClient, setStompClient] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const [subscriptions, setSubscriptions] = useState({});
@@ -12,6 +13,7 @@ export const StompProvider = ({ children }) => {
   useEffect(() => {
     if (isAuthenticated) {
       const token = localStorage.getItem("token");
+      console.log(token);
       const client = new Client({
         brokerURL: "ws://localhost:8080/ws",
         connectHeaders: {
@@ -28,6 +30,7 @@ export const StompProvider = ({ children }) => {
         },
         onStompError: (frame) => {
           console.error("STOMP error (Stomp Context):", frame.body);
+          setIsConnected(false);
         },
         onWebSocketError: (error) => {
           console.error("WebSocket error (Stomp Context):", error);

@@ -7,7 +7,6 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import javax.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,7 +29,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
       HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
 
-    String jwtToken = extractJwtToken(request);
+    String jwtToken = jwtUtils.extractJwtToken(request);
     String username = null;
 
     if (jwtToken != null) {
@@ -42,16 +41,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     }
 
     filterChain.doFilter(request, response);
-  }
-
-  @Nullable
-  private String extractJwtToken(HttpServletRequest request) {
-    final String authorizationHeader = request.getHeader("Authorization");
-    if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-      return authorizationHeader.substring(7);
-    } else {
-      return null;
-    }
   }
 
   private void authenticateUser(HttpServletRequest request, String username, String jwtToken) {

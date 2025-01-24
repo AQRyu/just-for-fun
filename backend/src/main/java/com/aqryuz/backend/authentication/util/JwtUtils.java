@@ -6,12 +6,15 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
 import javax.annotation.Nullable;
 import javax.crypto.SecretKey;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.server.ServerHttpRequest;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -47,6 +50,37 @@ public class JwtUtils {
           .compact();
     } catch (JwtException e) {
       log.error("Error generating JWT token: {}", e.getMessage());
+      return null;
+    }
+  }
+
+  @Nullable
+  public String extractJwtToken(HttpServletRequest request) {
+    final String authorizationHeader = request.getHeader("Authorization");
+    if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+      return authorizationHeader.substring(7);
+    } else {
+      return null;
+    }
+  }
+
+  public String extractJwtToken(ServerHttpRequest request) {
+    List<String> authHeaders = request.getHeaders().get("Authorization");
+    if (authHeaders != null && !authHeaders.isEmpty()) {
+      String token = authHeaders.get(0);
+      if (token.startsWith("Bearer ")) {
+        return token.substring(7);
+      }
+    }
+    return null;
+  }
+
+  @Nullable
+  public String extractJwtToken(StompHeaderAccessor request) {
+    final String authorizationHeader = request.getFirstNativeHeader("Authorization");
+    if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+      return authorizationHeader.substring(7);
+    } else {
       return null;
     }
   }

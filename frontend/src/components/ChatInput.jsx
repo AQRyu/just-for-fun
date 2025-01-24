@@ -35,6 +35,7 @@ function ChatInput({ selectedWorkspace }) {
             <Send />
           </IconButton>
         }
+        onChange={(e) => setInputValue(e.target.value)}
         onPressEnter={handleSendMessage}
       />
     </Box>
