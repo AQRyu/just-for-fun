@@ -1,72 +1,44 @@
 // components/ChatWindow.js
 import React, { useEffect, useState } from "react";
-import {
-  Grid,
-  Typography,
-  TextField,
-  Button,
-  Box,
-  Paper,
-  List,
-  ListItem,
-  ListItemText,
-  Divider,
-  IconButton,
-} from "@mui/material";
-import { MessageList as RCEMessageList } from "react-chat-elements";
-import { Send as SendIcon } from "@mui/icons-material";
+import { Box } from "@mui/material";
 import ChatHeader from "./ChatHeader";
 import MessageList from "./MessageList";
 import ChatInput from "./ChatInput";
-import { useStomp } from "../context/StompContext";
+import api from "../context/api";
 
 const ChatWindow = ({ selectedWorkspace }) => {
-  const { subscribe } = useStomp();
-  const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState("");
+  const [chatMessages, setChatMessages] = useState([]);
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage();
+  useEffect(() => {
+    if (selectedWorkspace) {
+      const fetchMessages = async () => {
+        try {
+          const response = await api.get(
+            `/api/workspaces/${selectedWorkspace.id}/messages`
+          );
+          setChatMessages(response.data);
+          console.log(response.data);
+        } catch (error) {
+          console.error("Error fetching messages:", error);
+          setChatMessages([]);
+        }
+      };
+      fetchMessages();
+    } else {
+      setChatMessages([]);
     }
-  };
-
-  const handleSendMessage = () => {
-    if (newMessage.trim() !== "") {
-      // client.publish({
-      //   destination: `/app/workspaces/${currentWorkspace.id}/sendMessage`,
-      //   body: JSON.stringify({
-      //     sender: "user",
-      //     content: newMessage,
-      //   }),
-      // });
-      setNewMessage("");
-    }
-  };
-
-  // useEffect(() => {
-  //   if (selectedWorkspace) {
-  //     const unsubscribe = subscribe(
-  //       `/topic/workspaces/${selectedWorkspace.id}/messages`,
-  //       (message) => {
-  //         setMessages((prevMessages) => [...prevMessages, message]);
-  //       }
-  //     );
-  //     return () => unsubscribe();
-  //   }
-  // }, [selectedWorkspace, subscribe]);
+  }, [selectedWorkspace]);
 
   return (
     <Box sx={{ height: "100vh", display: "flex", flexDirection: "column" }}>
       <ChatHeader selectedWorkspace={selectedWorkspace} />
       <Box flexGrow={1} style={{ overflowY: "auto" }}>
-        <MessageList selectedWorkspace={selectedWorkspace} />
+        <MessageList
+          selectedWorkspace={selectedWorkspace}
+          messages={chatMessages}
+        />
       </Box>
-      <ChatInput
-        selectedWorkspace={selectedWorkspace}
-        onSendMessage={(message) => /* Will be handled in ChatInput */ null}
-      />
+      <ChatInput selectedWorkspace={selectedWorkspace} />
     </Box>
   );
 };

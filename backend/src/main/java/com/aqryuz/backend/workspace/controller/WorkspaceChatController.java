@@ -17,8 +17,8 @@ public class WorkspaceChatController {
 
   private final WorkspaceMessageService workspaceMessageService;
 
-  @MessageMapping("/workspaces/{workspaceId}/sendMessage")
-  @SendTo("/topic/workspaces/{workspaceId}/newMessage")
+  @MessageMapping("/workspaces/{workspaceId}")
+  @SendTo("/topic/workspaces/{workspaceId}")
   public MessageResponse sendMessage(
       @DestinationVariable Long workspaceId, Message message, @AuthenticationPrincipal User user) {
 

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { MessageList as RCEMessageList } from "react-chat-elements";
 const MessageList = ({ selectedWorkspace, messages }) => {
   const formattedMessages = messages.map((msg) => ({

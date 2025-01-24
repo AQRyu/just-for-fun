@@ -6,14 +6,16 @@ import { useStomp } from "../context/StompContext";
 
 function ChatInput({ selectedWorkspace }) {
   const [inputValue, setInputValue] = useState("");
-  const { publish } = useStomp();
+  const { sendMessageToChat } = useStomp();
 
   const handleSendMessage = () => {
     if (inputValue.trim() !== "" && selectedWorkspace) {
-      // publish(`/app/workspaces/${selectedWorkspace.id}/sendMessage`, {
-      //   sender: "User",
-      //   content: inputValue,
-      // });
+      const messagePayload = {
+        content: inputValue,
+        sender: "Anonymous User", // You can expand this with user info
+        timestamp: new Date().toISOString(),
+      };
+      sendMessageToChat(selectedWorkspace.id, messagePayload);
       setInputValue("");
     }
   };
