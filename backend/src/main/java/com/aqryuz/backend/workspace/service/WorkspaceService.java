@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface WorkspaceService {
   List<Workspace> getAllWorkspaces(User admin);
+
+  Workspace getWorkspaceById(Long workspaceId);
 }

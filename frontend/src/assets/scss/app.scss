@@ -1,5 +1,7 @@
 html,
-body {
+body,
+#root,
+.App {
 	height: 100%;
 	width: 100vw;
 	margin: 0;
@@ -8,6 +10,15 @@ body {
 	text-align: center;
 }
 
+.workspace-list {
+	height: calc(100vh - 64px);
+	/* Adjust based on your header height in Sidebar */
+	overflow-y: auto;
+}
+
+.message-list {
+	padding: 10px;
+}
 // Page
 @import "pages/home";
 

@@ -1,6 +1,7 @@
 package com.aqryuz.backend.workspace.service;
 
 import com.aqryuz.backend.authentication.model.User;
+import com.aqryuz.backend.workspace.exception.WorkspaceNotFoundException;
 import com.aqryuz.backend.workspace.model.Workspace;
 import com.aqryuz.backend.workspace.repository.WorkspaceRepository;
 import java.util.List;
@@ -18,5 +19,10 @@ public class WorkspaceServiceImpl implements WorkspaceService {
   @Override
   public List<Workspace> getAllWorkspaces(User admin) {
     return workspaceRepository.findAllByAdmin(admin);
+  }
+
+  @Override
+  public Workspace getWorkspaceById(Long workspaceId) {
+    return workspaceRepository.findById(workspaceId).orElseThrow(WorkspaceNotFoundException::new);
   }
 }

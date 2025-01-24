@@ -6,7 +6,10 @@ public enum ErrorCode {
   WORKSPACE_NOT_FOUND("workspace.not.found"),
   USER_NOT_FOUND("user.not.found"),
   WORKSPACE_UNAUTHORIZED("workspace.unauthorized"),
-  RESOURCE_NOT_FOUND("resource.not.found");
+  RESOURCE_NOT_FOUND("resource.not.found"),
+
+  // message
+  INVALID_MESSAGE_CONTENT("invalid.message.content");
 
   private final String message;
 
