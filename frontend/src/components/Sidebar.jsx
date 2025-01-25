@@ -59,7 +59,7 @@ const Sidebar = ({ setSelectedWorkspace }) => {
       {filteredWorkspaces?.map((workspace) => (
         <ChatItem
           key={workspace.id}
-          avatar={"https://via.placeholder.com/50"}
+          avatar={"/placeholder/50"}
           alt={workspace.name}
           title={workspace.name}
           subtitle={workspace.description || "No description available"}
