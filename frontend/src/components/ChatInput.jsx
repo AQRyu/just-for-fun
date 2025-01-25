@@ -3,16 +3,18 @@ import { Box, IconButton } from "@mui/material";
 import { Send } from "@mui/icons-material";
 import { Input } from "react-chat-elements";
 import { useStomp } from "../context/StompContext";
+import { useAuth } from "../context/AuthContext";
 
 function ChatInput({ selectedWorkspace }) {
   const [inputValue, setInputValue] = useState("");
   const { sendMessageToChat } = useStomp();
+  const { user } = useAuth();
 
   const handleSendMessage = () => {
     if (inputValue.trim() !== "" && selectedWorkspace) {
       const messagePayload = {
         content: inputValue,
-        sender: "Anonymous User", // You can expand this with user info
+        sender: user.id,
         timestamp: new Date().toISOString(),
       };
       sendMessageToChat(selectedWorkspace.id, messagePayload);

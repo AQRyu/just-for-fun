@@ -1,3 +1,5 @@
 package com.aqryuz.backend.chat.controller.payload;
 
-public record Message(String sender, String content, long timestamp) {}
+import java.time.Instant;
+
+public record Message(String sender, String content, Instant timestamp) {}

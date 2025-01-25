@@ -5,15 +5,13 @@ import { useAuth } from "./AuthContext";
 const StompContext = createContext();
 
 export const StompProvider = ({ children }) => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, token } = useAuth();
   const [stompClient, setStompClient] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
   const [subscriptions, setSubscriptions] = useState({});
 
   useEffect(() => {
     if (isAuthenticated) {
-      const token = localStorage.getItem("token");
-      console.log(token);
       const client = new Client({
         brokerURL: "ws://localhost:8080/ws",
         connectHeaders: {
@@ -36,7 +34,7 @@ export const StompProvider = ({ children }) => {
           console.error("WebSocket error (Stomp Context):", error);
           setIsConnected(false);
         },
-        reconnectDelay: 5000,
+        reconnectDelay: 60000,
         heartbeatIncoming: 0,
         heartbeatOutgoing: 0,
       });
@@ -54,7 +52,7 @@ export const StompProvider = ({ children }) => {
     return () => {
       console.log("Not authenticated");
     };
-  }, [isAuthenticated]);
+  }, [isAuthenticated, token]);
 
   const subscribeToChat = (chatId, onMessageReceivedCallback) => {
     if (!stompClient || !isConnected) {

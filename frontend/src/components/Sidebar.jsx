@@ -1,14 +1,6 @@
 // components/Sidebar.js
 import React, { useEffect, useState } from "react";
-import {
-  TextField,
-  Box,
-  ListItem,
-  ListItemText,
-  Divider,
-  List,
-  InputAdornment,
-} from "@mui/material";
+import { TextField, Box, Divider, InputAdornment } from "@mui/material";
 import { ChatItem } from "react-chat-elements";
 import api from "../context/api";
 import SearchIcon from "@mui/icons-material/Search";

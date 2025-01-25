@@ -5,9 +5,13 @@ const api = axios.create({
   timeout: 10000,
 });
 
+const getToken = () => {
+  return JSON.parse(localStorage.getItem("user"))?.jwt;
+};
+
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
+    const token = getToken();
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -24,9 +28,6 @@ api.interceptors.response.use(
   (error) => {
     if (error.response && error.response.status === 401) {
       console.error("Unauthorized. Logging out.");
-      localStorage.removeItem("token");
-
-      window.location.href = "/login";
     } else if (error.response) {
       console.error("Server responded with an error:", error.response.data);
     } else if (error.request) {

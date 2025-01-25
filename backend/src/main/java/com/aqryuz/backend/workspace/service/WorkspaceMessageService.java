@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface WorkspaceMessageService {
 
-  WorkspaceMessage createAndSaveMessage(Long workspaceId, String content, User user);
+  WorkspaceMessage createAndSaveMessage(Long workspaceId, String content, String username);
 
   List<WorkspaceMessage> getMessages(Long workspaceId, User user);
 }

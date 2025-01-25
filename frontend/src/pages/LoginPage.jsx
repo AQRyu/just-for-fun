@@ -28,7 +28,7 @@ const LoginPage = () => {
     try {
       const response = await api.post(`/auth/login`, { username, password });
 
-      handleLogin(response.data.jwt);
+      handleLogin(response.data);
       const redirectPath = localStorage.getItem("redirectPath") || "/";
       localStorage.removeItem("redirectPath");
       navigate(redirectPath);
