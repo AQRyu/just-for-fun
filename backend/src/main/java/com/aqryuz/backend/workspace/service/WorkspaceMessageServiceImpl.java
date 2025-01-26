@@ -56,7 +56,7 @@ public class WorkspaceMessageServiceImpl implements WorkspaceMessageService {
       throw new WorkspaceMasterRequiredException();
     }
 
-    Pageable pageable = PageRequest.of(0, 50, Sort.by("timestamp").descending());
+    Pageable pageable = PageRequest.of(0, 50, Sort.by("timestamp"));
     return workspaceMessageRepository.findByWorkspaceId(workspaceId, pageable);
   }
 }

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, TextField } from "@mui/material";
 import { Send } from "@mui/icons-material";
-import { Input } from "react-chat-elements";
 import { useStomp } from "../context/StompContext";
 import { useAuth } from "../context/AuthContext";
 
@@ -22,24 +21,37 @@ function ChatInput({ selectedWorkspace }) {
     }
   };
 
+  const handleInputChange = (event) => {
+    setInputValue(event.target.value);
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      handleSendMessage();
+    }
+  };
+
   return (
     <Box p={1} borderTop="1px solid #e0e0e0">
-      <Input
-        placeholder="Type a message"
-        multiline={true}
-        value={inputValue}
-        rightButtons={
-          <IconButton
-            color="primary"
-            aria-label="send"
-            onClick={handleSendMessage}
-          >
-            <Send />
-          </IconButton>
-        }
-        onChange={(e) => setInputValue(e.target.value)}
-        onPressEnter={handleSendMessage}
-      />
+      <Box sx={{ display: "flex", alignItems: "center" }}>
+        <TextField
+          fullWidth
+          placeholder="Type a message"
+          variant="outlined"
+          value={inputValue}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
+        />
+        <IconButton
+          color="primary"
+          aria-label="send"
+          onClick={handleSendMessage}
+          sx={{ ml: 1 }}
+        >
+          <Send />
+        </IconButton>
+      </Box>
     </Box>
   );
 }
