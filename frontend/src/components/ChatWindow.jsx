@@ -1,5 +1,5 @@
 // components/ChatWindow.js
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Box } from "@mui/material";
 import ChatHeader from "./ChatHeader";
 import MessageList from "./MessageList";
@@ -10,6 +10,7 @@ import { useStomp } from "../context/StompContext";
 const ChatWindow = ({ selectedWorkspace }) => {
   const [chatMessages, setChatMessages] = useState([]);
   const { subscribeToChat, unsubscribeFromChat } = useStomp();
+  const messageListRef = useRef(null); // Create a ref for the MessageList container
 
   const onMessageReceived = useCallback((data) => {
     try {
@@ -53,12 +54,23 @@ const ChatWindow = ({ selectedWorkspace }) => {
         unsubscribeFromChat(selectedWorkspace?.id);
       }
     };
-  }, [selectedWorkspace, onMessageReceived]);
+  }, [
+    selectedWorkspace,
+    onMessageReceived,
+    subscribeToChat,
+    unsubscribeFromChat,
+  ]);
+
+  useEffect(() => {
+    if (messageListRef.current) {
+      messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
+    }
+  }, [chatMessages]);
 
   return (
     <Box sx={{ height: "100vh", display: "flex", flexDirection: "column" }}>
       <ChatHeader selectedWorkspace={selectedWorkspace} />
-      <Box flexGrow={1} style={{ overflowY: "auto" }}>
+      <Box ref={messageListRef} flexGrow={1} style={{ overflowY: "auto" }}>
         <MessageList
           selectedWorkspace={selectedWorkspace}
           messages={chatMessages}
