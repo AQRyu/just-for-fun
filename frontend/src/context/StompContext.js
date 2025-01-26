@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import { Client } from "@stomp/stompjs";
 
 const StompContext = createContext();
@@ -6,7 +12,7 @@ const StompContext = createContext();
 export const StompProvider = ({ children }) => {
   const [stompClient, setStompClient] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
-  const [subscriptions, setSubscriptions] = useState({});
+  const [activeSubscription, setActiveSubscription] = useState(null);
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem("user"))?.jwt;
@@ -38,7 +44,6 @@ export const StompProvider = ({ children }) => {
     });
 
     client.activate();
-    setStompClient(client);
 
     return () => {
       if (client && client.connected) {
@@ -47,57 +52,53 @@ export const StompProvider = ({ children }) => {
     };
   }, []);
 
-  const subscribeToChat = (chatId, onMessageReceivedCallback) => {
-    if (!stompClient || !isConnected) {
-      console.error(
-        "Stomp client not connected, cannot subscribe to chat:",
-        chatId
-      );
-      return;
-    }
-
-    const subscribeDestination = `/topic/workspaces/${chatId}`;
-
-    if (subscriptions[chatId]) {
-      subscriptions[chatId].unsubscribe();
-      setSubscriptions((prevSubs) => {
-        const newSubs = { ...prevSubs };
-        delete newSubs[chatId];
-        return newSubs;
-      });
-    }
-
-    const subscription = stompClient.subscribe(
-      subscribeDestination,
-      (message) => {
-        debugger;
-        const body = JSON.parse(message.body);
-        if (onMessageReceivedCallback) {
-          onMessageReceivedCallback(body.content, chatId);
-        }
+  const subscribeToChat = useCallback(
+    (workspaceId, onMessageReceivedCallback) => {
+      if (!stompClient || !isConnected) {
+        console.error(
+          "Stomp client not connected, cannot subscribe to chat:",
+          workspaceId
+        );
+        return;
       }
-    );
 
-    setSubscriptions((prevSubs) => ({ ...prevSubs, [chatId]: subscription }));
-    console.log(
-      `Stomp Context: Subscribed to chat: ${chatId} on ${subscribeDestination}`
-    );
-  };
+      if (activeSubscription) {
+        activeSubscription.unsubscribe();
+      }
 
-  const unsubscribeFromChat = (chatId) => {
-    if (subscriptions[chatId]) {
-      subscriptions[chatId].unsubscribe();
-      setSubscriptions((prevSubs) => {
-        const newSubs = { ...prevSubs };
-        delete newSubs[chatId];
-        return newSubs;
-      });
-      console.log(`Stomp Context: Unsubscribed from chat: ${chatId}`);
+      const subscribeDestination = `/topic/workspaces/${workspaceId}`;
+      const subscription = stompClient.subscribe(
+        subscribeDestination,
+        (data) => {
+          try {
+            const body = JSON.parse(data.body);
+            if (onMessageReceivedCallback) {
+              onMessageReceivedCallback(body, workspaceId);
+            }
+          } catch (error) {
+            console.error("Error handling message:", error, data);
+          }
+        }
+      );
+
+      setActiveSubscription(subscription);
+
+      console.log(
+        `Stomp Context: Subscribed to chat: ${workspaceId} on ${subscribeDestination}`
+      );
+    },
+    [activeSubscription, isConnected, stompClient]
+  );
+
+  const unsubscribeFromChat = useCallback(() => {
+    if (activeSubscription) {
+      activeSubscription.unsubscribe();
+      setActiveSubscription(null);
+      console.log(`Stomp Context: Unsubscribed from chat`);
     }
-  };
+  }, [activeSubscription]);
 
   const sendMessageToChat = (chatId, messagePayload) => {
-    debugger;
     if (!stompClient || !isConnected) {
       console.error(
         "Stomp client not connected, cannot send message to chat:",

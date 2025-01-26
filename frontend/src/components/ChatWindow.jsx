@@ -1,15 +1,34 @@
 // components/ChatWindow.js
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Box } from "@mui/material";
 import ChatHeader from "./ChatHeader";
 import MessageList from "./MessageList";
 import ChatInput from "./ChatInput";
 import api from "../context/api";
+import { useStomp } from "../context/StompContext";
 
 const ChatWindow = ({ selectedWorkspace }) => {
   const [chatMessages, setChatMessages] = useState([]);
+  const { subscribeToChat, unsubscribeFromChat } = useStomp();
+
+  const onMessageReceived = useCallback((data) => {
+    try {
+      setChatMessages((prevMessages) => [
+        ...prevMessages,
+        {
+          content: data.content,
+          sender: data.sender,
+          timestamp: data.timestamp,
+        },
+      ]);
+    } catch (error) {
+      console.error("Error parsing incoming message:", error, data);
+    }
+  }, []);
 
   useEffect(() => {
+    let subscription;
+
     if (selectedWorkspace) {
       const fetchMessages = async () => {
         try {
@@ -24,10 +43,17 @@ const ChatWindow = ({ selectedWorkspace }) => {
         }
       };
       fetchMessages();
-    } else {
-      setChatMessages([]);
+
+      subscription = subscribeToChat(selectedWorkspace.id, onMessageReceived);
     }
-  }, [selectedWorkspace]);
+
+    return () => {
+      setChatMessages([]);
+      if (subscription) {
+        unsubscribeFromChat(selectedWorkspace?.id);
+      }
+    };
+  }, [selectedWorkspace, onMessageReceived]);
 
   return (
     <Box sx={{ height: "100vh", display: "flex", flexDirection: "column" }}>
