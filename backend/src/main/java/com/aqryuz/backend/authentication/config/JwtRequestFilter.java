@@ -2,7 +2,6 @@ package com.aqryuz.backend.authentication.config;
 
 import com.aqryuz.backend.authentication.service.UserService;
 import com.aqryuz.backend.authentication.util.JwtUtils;
-
 import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
