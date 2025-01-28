@@ -2,6 +2,8 @@ package com.aqryuz.backend.authentication.config;
 
 import com.aqryuz.backend.authentication.service.UserService;
 import com.aqryuz.backend.authentication.util.JwtUtils;
+
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,18 +31,23 @@ public class JwtRequestFilter extends OncePerRequestFilter {
       HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
       throws ServletException, IOException {
 
-    String jwtToken = jwtUtils.extractJwtToken(request);
-    String username = null;
+    try {
+      String jwtToken = jwtUtils.extractJwtToken(request);
+      String username = null;
 
-    if (jwtToken != null) {
-      username = jwtUtils.getUsernameFromToken(jwtToken);
+      if (jwtToken != null) {
+        username = jwtUtils.getUsernameFromToken(jwtToken);
+      }
+
+      if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        authenticateUser(request, username, jwtToken);
+      }
+
+      filterChain.doFilter(request, response);
+    } catch (JwtException e) {
+      log.error("Unknown JWT Error", e);
+      response.setStatus(401);
     }
-
-    if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-      authenticateUser(request, username, jwtToken);
-    }
-
-    filterChain.doFilter(request, response);
   }
 
   private void authenticateUser(HttpServletRequest request, String username, String jwtToken) {

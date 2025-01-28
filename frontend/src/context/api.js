@@ -23,11 +23,25 @@ api.interceptors.request.use(
   }
 );
 
+let navigate;
+export const setNavigate = (nav) => {
+  navigate = nav;
+};
+
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
       console.error("Unauthorized. Logging out.");
+      localStorage.removeItem("user");
+
+      if (navigate) {
+        navigate("/login");
+      } else {
+        console.error(
+          "Navigation function not available. Check setNavigate usage."
+        );
+      }
     } else if (error.response) {
       console.error("Server responded with an error:", error.response.data);
     } else if (error.request) {

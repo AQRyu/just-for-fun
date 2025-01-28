@@ -101,13 +101,8 @@ public class JwtUtils {
 
   @Nullable
   private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-    try {
-      Claims claims =
-          Jwts.parser().verifyWith(jwtSecret).build().parseSignedClaims(token).getPayload();
-      return claimsResolver.apply(claims);
-    } catch (JwtException e) {
-      log.error("Error extracting claim from JWT: {}", e.getMessage());
-      return null;
-    }
+    Claims claims =
+        Jwts.parser().verifyWith(jwtSecret).build().parseSignedClaims(token).getPayload();
+    return claimsResolver.apply(claims);
   }
 }
