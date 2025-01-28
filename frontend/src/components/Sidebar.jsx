@@ -1,4 +1,3 @@
-// components/Sidebar.js
 import React, { useEffect, useState } from "react";
 import { TextField, Box, Divider, InputAdornment } from "@mui/material";
 import { ChatItem } from "react-chat-elements";

@@ -28,8 +28,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.client.MockRestServiceServer;
 
-@RestClientTest({LiteLLMClient.class, BackendApplication.class}) // This annotation is key!
-@EnableConfigurationProperties(LiteLLMProperties.class) // Add this line
+@RestClientTest({LiteLLMClient.class, BackendApplication.class})
+@EnableConfigurationProperties(LiteLLMProperties.class)
 @TestPropertySource(properties = {"litellm.api.url=test", "litellm.api.key=sk-*"})
 class LiteLLMClientTest {
 
@@ -138,7 +138,6 @@ class LiteLLMClientTest {
     this.server.verify();
   }
 
-  // Helper function to create a sample request
   private ChatCompletionsRequest createChatCompletionsRequest() throws JsonProcessingException {
     String jsonReq =
         """

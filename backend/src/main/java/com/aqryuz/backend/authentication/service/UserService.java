@@ -22,18 +22,16 @@ public class UserService implements UserDetailsService {
   private final PasswordEncoder passwordEncoder;
 
   public User registerUser(RegistrationRequest request) {
-    // Check if username already exists
     if (userRepository.findByUsername(request.username()).isPresent()) {
       throw new DuplicateUsernameException();
     }
 
-    // ... other validation logic (email, password strength, etc.)
     User user =
         User.builder()
             .username(request.username())
             .password(passwordEncoder.encode(request.password()))
             .email(request.email())
-            .role(Role.USER) // Set default role
+            .role(Role.USER)
             .build();
     return userRepository.save(user);
   }

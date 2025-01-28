@@ -1,4 +1,3 @@
-// components/ChatWindow.js
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Box } from "@mui/material";
 import ChatHeader from "./ChatHeader";
@@ -10,7 +9,7 @@ import { useStomp } from "../context/StompContext";
 const ChatWindow = ({ selectedWorkspace }) => {
   const [chatMessages, setChatMessages] = useState([]);
   const { subscribeToChat, unsubscribeFromChat } = useStomp();
-  const messageListRef = useRef(null); // Create a ref for the MessageList container
+  const messageListRef = useRef(null);
 
   const onMessageReceived = useCallback((data) => {
     try {

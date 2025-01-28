@@ -8,7 +8,6 @@ public enum ErrorCode {
   WORKSPACE_UNAUTHORIZED("workspace.unauthorized"),
   RESOURCE_NOT_FOUND("resource.not.found"),
 
-  // message
   INVALID_MESSAGE_CONTENT("invalid.message.content");
 
   private final String message;

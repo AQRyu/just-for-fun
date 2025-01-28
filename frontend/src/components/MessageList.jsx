@@ -1,11 +1,10 @@
 import { MessageList as RCEMessageList } from "react-chat-elements";
 const MessageList = ({ selectedWorkspace, messages }) => {
   const formattedMessages = messages.map((msg) => ({
-    position: msg.sender === "You" ? "right" : "left", // Adjust logic as needed
+    position: msg.sender === "You" ? "right" : "left",
     type: "text",
     text: msg.content,
-    date: new Date(msg.timestamp), // Assuming your backend sends a timestamp
-    // avatar: ... you might need to fetch avatar based on sender
+    date: new Date(msg.timestamp),
     sender: msg.sender,
   }));
 
