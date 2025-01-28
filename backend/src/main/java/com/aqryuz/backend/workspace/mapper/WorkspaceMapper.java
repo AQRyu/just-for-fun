@@ -18,6 +18,6 @@ public interface WorkspaceMapper {
   @Mapping(target = "id", ignore = true)
   @Mapping(target = "name", source = "request.name")
   @Mapping(target = "members", ignore = true)
-  @Mapping(target = "admin", source = "master")
+  @Mapping(target = "admin", source = "admin")
   Workspace toWorkspace(WorkspaceCreationRequest request, User admin);
 }

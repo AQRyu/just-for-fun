@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
+import api from "../context/api";
 
 function ProfilePage() {
   const [profile, setProfile] = useState(null);
@@ -20,39 +21,30 @@ function ProfilePage() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const token = localStorage.getItem("user");
-
-        if (!token) {
-          console.error("No token found. Please log in.");
-          setRedirectToLogin(true);
-          return;
-        }
-
-        const url = `${process.env.REACT_APP_BACKEND_URL}/me`;
-        const response = await fetch(url, {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        if (!response.ok) {
-          if (response.status === 401) {
-            console.error("Unauthorized. Token may be expired.");
-            localStorage.removeItem("user");
-            setRedirectToLogin(true);
-            return;
-          }
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
+        const response = await api.get(`/me`);
+        const data = response.data;
         setProfile(data);
         setNickName(data.nickName || "");
         setEmail(data.email || "");
         setBio(data.bio || "");
         setProfilePictureURL(data.profilePictureURL || "");
       } catch (error) {
-        console.error("Error fetching profile:", error);
+        if (error.response) {
+          if (error.response.status === 401) {
+            console.error("Unauthorized. Token may be expired.");
+            localStorage.removeItem("user");
+            setRedirectToLogin(true);
+            return;
+          }
+          console.error(
+            "Error fetching profile (server responded):",
+            error.response.data
+          );
+        } else if (error.request) {
+          console.error("Error fetching profile (no response):", error.request);
+        } else {
+          console.error("Error fetching profile (setup):", error.message);
+        }
       }
     };
 
@@ -61,42 +53,31 @@ function ProfilePage() {
 
   const updateProfile = async () => {
     try {
-      const token = localStorage.getItem("user");
-      if (!token) {
-        console.error("No token found for update. Redirecting to login.");
-        setRedirectToLogin(true);
-        return;
-      }
-
-      const url = `${process.env.REACT_APP_BACKEND_URL}/me`;
-      const response = await fetch(url, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          nickName,
-          email,
-          bio,
-          profilePictureURL,
-        }),
+      const response = await api.put(`/me`, {
+        nickName,
+        email,
+        bio,
+        profilePictureURL,
       });
 
-      if (!response.ok) {
-        if (response.status === 401) {
+      setProfile(response.data);
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 401) {
           console.error("Unauthorized. Token may be expired.");
           localStorage.removeItem("user");
           setRedirectToLogin(true);
           return;
         }
-        throw new Error(`HTTP error! status: ${response.status}`);
+        console.error(
+          "Error updating profile (server responded):",
+          error.response.data
+        );
+      } else if (error.request) {
+        console.error("Error updating profile (no response):", error.request);
+      } else {
+        console.error("Error updating profile (setup):", error.message);
       }
-
-      const updatedProfile = await response.json();
-      setProfile(updatedProfile);
-    } catch (error) {
-      console.error("Error updating profile:", error);
     }
   };
 

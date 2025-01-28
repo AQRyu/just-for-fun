@@ -32,7 +32,7 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="sticky">
       <Toolbar>
         <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}>
           <Link to="/" style={{ textDecoration: "none" }}>

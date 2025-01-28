@@ -9,9 +9,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import api from "../context/api";
 import { useAuth } from "../context/AuthContext";
 
 const WorkspaceManagementPage = () => {
@@ -24,22 +24,11 @@ const WorkspaceManagementPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/login");
-      return;
-    }
-
     const fetchMembers = async () => {
       setLoading(true);
       try {
-        const token = localStorage.getItem("user");
-        const response = await axios.get(
-          `${process.env.REACT_APP_BACKEND_URL}/api/workspaces/${workspaceId}/members`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+        const response = await api.get(
+          `/api/workspaces/${workspaceId}/members`
         );
         setMembers(response.data);
       } catch (err) {
@@ -60,18 +49,11 @@ const WorkspaceManagementPage = () => {
 
   const handleAddMember = async () => {
     try {
-      const token = localStorage.getItem("user");
-      const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/workspaces/${workspaceId}/members`,
-        [newMemberId],
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+      const response = await api.post(
+        `/api/workspaces/${workspaceId}/members`,
+        [newMemberId]
       );
       setMembers(response.data);
-      debugger;
       setNewMemberId("");
     } catch (err) {
       setError(
@@ -83,16 +65,9 @@ const WorkspaceManagementPage = () => {
 
   const handleRemoveMember = async (memberId) => {
     try {
-      const token = localStorage.getItem("user");
-      await axios.delete(
-        `${process.env.REACT_APP_BACKEND_URL}/api/workspaces/${workspaceId}/members`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          data: [memberId],
-        }
-      );
+      await api.delete(`/api/workspaces/${workspaceId}/members`, {
+        data: [memberId],
+      });
       setMembers(members.filter((member) => member.id !== memberId));
     } catch (err) {
       setError("Error removing member.");

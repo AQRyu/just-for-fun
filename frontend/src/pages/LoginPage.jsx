@@ -9,6 +9,7 @@ import {
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import api from "../context/api";
 
 const LoginPage = () => {
   const { handleLogin } = useAuth();
@@ -25,30 +26,23 @@ const LoginPage = () => {
     setError("");
 
     try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/auth/login`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ username, password }),
-        }
-      );
+      const response = await api.post(`/auth/login`, { username, password });
 
-      if (response.ok) {
-        const data = await response.json();
-        handleLogin(data.jwt);
-        const redirectPath = localStorage.getItem("redirectPath") || "/";
-        localStorage.removeItem("redirectPath");
-        navigate(redirectPath);
-      } else {
-        const errorData = await response.json();
-        setError(errorData.message || "Login failed");
-      }
+      handleLogin(response.data);
+      const redirectPath = localStorage.getItem("redirectPath") || "/";
+      localStorage.removeItem("redirectPath");
+      navigate(redirectPath);
     } catch (error) {
-      console.error("Error during login:", error);
-      setError("An error occurred. Please try again later.");
+      if (error.response) {
+        setError(error.response.data.message || "Login failed");
+        console.error("Login error (server responded):", error.response.data);
+      } else if (error.request) {
+        setError("An error occurred. Please try again later.");
+        console.error("Login error (no response):", error.request);
+      } else {
+        setError("An error occurred. Please try again later.");
+        console.error("Login error (setup):", error.message);
+      }
     } finally {
       setLoading(false);
     }
@@ -56,16 +50,11 @@ const LoginPage = () => {
 
   return (
     <Container maxWidth="sm" sx={{ mt: "20vh", textAlign: "center" }}>
-      {" "}
-      {/* Use MUI Container for centering */}
       <Typography variant="h4" gutterBottom>
         Login
       </Typography>
-      {error && <Alert severity="error">{error}</Alert>}{" "}
-      {/* Use MUI Alert for errors */}
+      {error && <Alert severity="error">{error}</Alert>}
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-        {" "}
-        {/* Use MUI Box and form */}
         <TextField
           margin="normal"
           required
@@ -97,7 +86,7 @@ const LoginPage = () => {
           sx={{ mt: 3, mb: 2 }}
           disabled={loading}
         >
-          {loading ? "Logging in..." : "Login"} {/* Show loading indicator */}
+          {loading ? "Logging in..." : "Login"}
         </Button>
       </Box>
     </Container>

@@ -8,7 +8,6 @@ import com.aqryuz.backend.workspace.exception.WorkspaceMasterRequiredException;
 import com.aqryuz.backend.workspace.mapper.WorkspaceMapper;
 import com.aqryuz.backend.workspace.model.Workspace;
 import com.aqryuz.backend.workspace.repository.WorkspaceRepository;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +32,7 @@ public class WorkspaceCreationServiceImpl implements WorkspaceCreationService {
 
     User user = userRepository.findById(userId).orElseThrow(WorkspaceMasterRequiredException::new);
 
-    Workspace newWorkspace = mapper.toWorkspace(request, Set.of(user));
+    Workspace newWorkspace = mapper.toWorkspace(request, user);
 
     return workspaceRepository.save(newWorkspace);
   }

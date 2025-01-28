@@ -1,3 +1,5 @@
 package com.aqryuz.backend.authentication.controller.payload;
 
-public record LoginResponse(String jwt) {}
+import com.aqryuz.backend.authentication.model.Role;
+
+public record LoginResponse(String jwt, Long id, String username, Role role) {}
