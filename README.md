@@ -1,4 +1,4 @@
- Full Stack Chat Application with Spring Boot and React
+ # Full Stack Chat Application with Spring Boot and React
 
 This project demonstrates a full-stack chat application built using Spring Boot for the backend and React for the frontend. It leverages WebSockets for real-time communication and incorporates features like user authentication, workspace management, and a robust chat interface.
 
@@ -31,14 +31,6 @@ This project demonstrates a full-stack chat application built using Spring Boot 
 * **Other:**
     * LiteLLM (Integration suggested by test file, but not fully implemented in provided code)
 
-
-
-## Project Structure
-
-* **`backend/`**: Contains the Spring Boot backend application.
-* **`frontend/`**: Contains the React frontend application.
-* **`backend/src/main/java/com/aqryuz/backend/authentication`**: Handles user authentication and authorization.
-* **`backend/src/main/java/com/aqryuz/backend/workspace`**: Manages workspace creation, messaging, and related functionalities.
 
 ## Getting Started
 
