@@ -13,7 +13,7 @@ This project demonstrates a full-stack chat application built using Spring Boot 
 ## Technologies Used
 
 * **Backend:**
-    * Java 17
+    * Java 21
     * Spring Boot 3.4.2
     * Spring Security
     * Spring Data JPA
